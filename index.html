@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tổng hợp công việc — huongtx</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="page-header">
+    <p class="eyebrow">ZBS Product · huongtx</p>
+    <h1>Tổng hợp công việc</h1>
+    <p class="sub">Hôm nay · Tuần này · Roadmap</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="today">Hôm nay</button>
+    <button class="tab-btn" data-tab="week">Tuần này</button>
+    <button class="tab-btn" data-tab="roadmap">Roadmap</button>
+  </div>
+
+  <!-- ============ TAB: HÔM NAY ============ -->
+  <div class="tab-panel active" id="tab-today">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--critical-bar)"></div>Bắt buộc hôm nay</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--soon-bar)"></div>Cố gắng hôm nay</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--later-bar)"></div>Optional</div>
+    </div>
+    <div class="list" id="today-list"></div>
+  </div>
+
+  <!-- ============ TAB: TUẦN NÀY ============ -->
+  <div class="tab-panel" id="tab-week">
+    <p class="sub" style="margin-bottom:14px;" id="week-range"></p>
+    <div class="list" id="week-list"></div>
+  </div>
+
+  <!-- ============ TAB: ROADMAP ============ -->
+  <div class="tab-panel" id="tab-roadmap">
+    <p class="sub" style="margin-bottom:10px;">Trục thời gian theo ngày — từ 11/08 đến 22/08/2026</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--done-bar)"></div>Đã xong</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--active-bar)"></div>Đang làm</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--soon-bar)"></div>Tiếp theo</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--later-bar)"></div>Chưa bắt đầu</div>
+    </div>
+
+    <div class="chart-wrap">
+
+      <div class="header-row">
+        <div class="header-label">Task / Người làm</div>
+        <div class="header-days">
+          <div class="day-col today"><span class="day-num">11</span><span class="day-name">T3</span></div>
+          <div class="day-col"><span class="day-num">12</span><span class="day-name">T4</span></div>
+          <div class="day-col"><span class="day-num">13</span><span class="day-name">T5</span></div>
+          <div class="day-col"><span class="day-num">14</span><span class="day-name">T6</span></div>
+          <div class="day-col weekend"><span class="day-num">15</span><span class="day-name">T7</span></div>
+          <div class="day-col weekend"><span class="day-num">16</span><span class="day-name">CN</span></div>
+          <div class="day-col"><span class="day-num">17</span><span class="day-name">T2</span></div>
+          <div class="day-col"><span class="day-num">18</span><span class="day-name">T3</span></div>
+          <div class="day-col"><span class="day-num">19</span><span class="day-name">T4</span></div>
+          <div class="day-col"><span class="day-num">20</span><span class="day-name">T5</span></div>
+          <div class="day-col"><span class="day-num">21</span><span class="day-name">T6</span></div>
+          <div class="day-col weekend"><span class="day-num">22</span><span class="day-name">T7</span></div>
+        </div>
+      </div>
+
+      <div class="group-row">P1 · hainlb</div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name"><a href="https://doc.tools.adtima.vn/pages/viewpage.action?pageId=138899774" target="_blank" rel="noopener">Spec lấy số điện thoại</a></span>
+          <div class="task-meta">
+            <span class="pill pill-done">Đã xong</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Đưa ra giải pháp thu thập & xác thực SĐT trong ZBS Account.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-done" style="left:1%; width:7.5%;">✓ Xong</div></div>
+        </div>
+      </div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name">Trừ phí quản lý & Thanh lý số dư</span>
+          <div class="task-meta">
+            <span class="pill pill-active">Đang làm</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Triển khai xử lý thanh toán/số dư cho tài khoản ZBS, đảm bảo đối soát chính xác.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-active" style="left:1%; width:15%;">Đang làm<span class="pulse-tail"></span></div></div>
+        </div>
+      </div>
+
+      <div class="group-row">P2 · viht2 — Đang chạy song song</div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name">Feedback template → monetization</span>
+          <div class="task-meta">
+            <span class="pill pill-done">Đã xong</span>
+            <span class="assignee">viht2</span>
+          </div>
+          <span class="task-desc">Phân tích feedback UX/UI để tìm cơ hội monetize tính năng template.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-done" style="left:1%; width:7.5%;">✓ Xong</div></div>
+        </div>
+      </div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name"><a href="https://jira.tools.adtima.vn/browse/ZCA-4689" target="_blank" rel="noopener">Detect nút prefix form Zalo</a></span>
+          <div class="task-meta">
+            <span class="pill pill-done">Đã xong</span>
+            <span class="assignee">viht2</span>
+          </div>
+          <span class="task-desc">Viết ticket kỹ thuật cho việc nhận diện prefix trong form ZNS — ticket ZCA-4689 đã tạo.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-done" style="left:1%; width:15%;">✓ Xong</div></div>
+        </div>
+      </div>
+
+      <div class="group-row">P2 · viht2 — Tiếp theo</div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name"><a href="reports/ZBSP-20-auto-approve-quota-free-2k.html" target="_blank" rel="noopener">Auto-approve 2k-msg quota</a></span>
+          <div class="task-meta">
+            <span class="pill pill-done">Scoping xong</span>
+            <span class="assignee">viht2</span>
+          </div>
+          <span class="task-desc">Tự động cấp 2.000 tin miễn phí cho OA mới, bỏ bước duyệt thủ công. Scoping & review đã hoàn thành (ZBSP-20).</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-done" style="left:9%; width:15%;">✓ Scoping</div></div>
+        </div>
+      </div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name"><a href="reports/zbs-template-monetization-baocao.html" target="_blank" rel="noopener">Phân tích chi tiết feature template phát triển monetization</a></span>
+          <div class="task-meta">
+            <span class="pill pill-mid">80% · chờ họp</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Đào sâu phân tích feature template hiện có để lên phương án phát triển hướng monetization. Báo cáo đầy đủ đã có, chưa chốt — họp với anh Vĩ ngày mai (14/08).</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-active" style="left:34%; width:15%;">80%<span class="pulse-tail"></span></div></div>
+        </div>
+      </div>
+
+      <div class="group-row">P3 · hainlb — Chạy song song</div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name"><a href="reports/redesign-cong-thanh-toan.html" target="_blank" rel="noopener">Review payment gateway</a></span>
+          <div class="task-meta">
+            <span class="pill pill-done">Đã xong</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Rà soát toàn bộ flow thanh toán ZBS — Fresh UX Redesign đã hoàn thành, xem spec chi tiết.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+          <div class="bar-layer"><div class="bar bar-done" style="left:1%; width:7.5%;">✓ Xong</div></div>
+        </div>
+      </div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name">Data tracking user đã sử dụng số điện thoại</span>
+          <div class="task-meta">
+            <span class="pill pill-later">Chưa bắt đầu</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Theo dõi & thống kê user đã sử dụng tính năng số điện thoại, làm song song cùng Review payment gateway.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+        </div>
+      </div>
+
+      <div class="task-row">
+        <div class="task-label">
+          <span class="task-name">Onboarding agent → teammate ảo</span>
+          <div class="task-meta">
+            <span class="pill pill-active">Đang làm</span>
+            <span class="assignee">hainlb</span>
+          </div>
+          <span class="task-desc">Discovery hướng xây dựng agent hỗ trợ onboarding ZBS tự động.</span>
+        </div>
+        <div class="bars-area">
+          <div class="day-cell today-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div><div class="day-cell weekend-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell"></div><div class="day-cell"></div>
+          <div class="day-cell weekend-cell"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="page-footer">ZBS Product · huongtx · 08/2026</footer>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+  // ---- render "Hôm nay" ----
+  function esc(s){ return s == null ? '' : String(s); }
+
+  function renderTodayItem(t, i){
+    var goalBox = '';
+    if (t.goalLabel && t.bullets) {
+      goalBox = '<div class="goal-box"><b>' + esc(t.goalLabel) + '</b> ' + esc(t.goalText) +
+        '<ul>' + t.bullets.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul></div>';
+    } else if (t.goalLabel && t.goalText) {
+      goalBox = '<div class="goal-box"><b>' + esc(t.goalLabel) + '</b> ' + esc(t.goalText) + '</div>';
+    }
+    var refRow = t.refHtml ? '<div class="row"><span class="row-label">Tham chiếu</span><span class="row-value">' + t.refHtml + '</span></div>' : '';
+    var noteRow = t.note ? '<div class="row"><span class="row-label">Ghi chú</span><span class="row-value">' + esc(t.note) + '</span></div>' : '';
+    var resultLink = t.resultUrl ? '<a class="result-link" href="' + esc(t.resultUrl) + '" target="_blank" rel="noopener">' + esc(t.resultLabel || 'Xem kết quả →') + '</a>' : '';
+
+    return '<div class="item' + (t.optional ? ' optional' : '') + '">' +
+      '<div class="num">' + (i + 1) + '</div>' +
+      '<div class="item-body">' +
+        '<div class="item-top"><span class="item-title">' + esc(t.title) + '</span>' +
+          '<span class="pill ' + t.pillClass + '">' + esc(t.pillLabel) + '</span></div>' +
+        goalBox + refRow + noteRow + resultLink +
+      '</div></div>';
+  }
+
+  function renderWeekItem(t, i){
+    var noteP = t.note ? '<p class="item-note">' + esc(t.note) + '</p>' : '';
+    var body;
+    if (t.waiting) {
+      body = '<div class="wait-row"><span class="wait-dot"></span>' + esc(t.waiting) + '</div>';
+    } else if (typeof t.percent === 'number') {
+      body = '<div class="progress-row"><div class="progress-track">' +
+        '<div class="progress-fill ' + t.fillClass + '" style="width:' + t.percent + '%;"></div></div>' +
+        '<span class="progress-pct">' + esc(t.pctLabel || (t.percent + '%')) + '</span></div>';
+    } else {
+      body = '';
+    }
+    var resultLink = t.resultUrl ? '<a class="result-link" href="' + esc(t.resultUrl) + '" target="_blank" rel="noopener">' + esc(t.resultLabel || 'Xem kết quả →') + '</a>' : '';
+    return '<div class="item">' +
+      '<div class="num">' + (i + 1) + '</div>' +
+      '<div class="item-body">' +
+        '<div class="item-top"><span class="item-title">' + esc(t.title) + '</span>' +
+          '<span class="pill ' + t.pillClass + '">' + esc(t.pillLabel) + '</span></div>' +
+        noteP + body + resultLink +
+      '</div></div>';
+  }
+
+  document.getElementById('today-list').innerHTML = TODAY_TASKS.map(renderTodayItem).join('');
+  document.getElementById('week-list').innerHTML = WEEK_TASKS.map(renderWeekItem).join('');
+  document.getElementById('week-range').textContent = WEEK_RANGE;
+
+  // ---- tabs ----
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

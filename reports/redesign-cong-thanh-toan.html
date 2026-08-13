@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZBS Payment Gateway — Đặc tả thiết kế lại (Fresh UX Redesign Spec)</title>
+<style>
+  :root{
+    --blue:#0068FF;
+    --blue-dark:#0044CC;
+    --blue-bg:#EAF2FF;
+    --ink:#0A1526;
+    --body:#40495A;
+    --muted:#7C8699;
+    --border:#E4E8F0;
+    --bg:#F6F8FC;
+    --white:#FFFFFF;
+    --green:#0F9D58;
+    --green-bg:#E8F8EF;
+    --amber:#B9770E;
+    --amber-bg:#FFF4E0;
+    --red:#D23F31;
+    --red-bg:#FDEAEA;
+    --radius:14px;
+    --shadow: 0 1px 2px rgba(10,21,38,.04), 0 8px 24px rgba(10,21,38,.06);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Be Vietnam Pro','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--body);
+    line-height:1.6;
+  }
+  a{color:var(--blue); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    background:var(--ink);
+    color:#fff;
+  }
+  .topbar .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px;}
+  .topbar .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--blue);}
+  .topbar .meta{font-size:12.5px; color:#B9C2D6; display:flex; gap:18px;}
+  .topbar .badge{
+    background:rgba(0,104,255,.18); color:#9DC0FF; border:1px solid rgba(0,104,255,.4);
+    padding:3px 10px; border-radius:20px; font-weight:700; font-size:11.5px; letter-spacing:.02em;
+  }
+
+  /* ---------- layout ---------- */
+  .layout{ display:flex; max-width:1360px; margin:0 auto; align-items:flex-start;}
+  .sidebar{
+    width:270px; flex:0 0 270px; position:sticky; top:57px;
+    height:calc(100vh - 57px); overflow-y:auto;
+    padding:28px 16px 40px 28px;
+  }
+  .sidebar h4{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:22px 0 8px;}
+  .sidebar h4:first-child{margin-top:0;}
+  .sidebar a{
+    display:block; padding:7px 10px; border-radius:8px; font-size:13.5px; color:var(--body); font-weight:500;
+  }
+  .sidebar a:hover{background:var(--blue-bg); color:var(--blue); text-decoration:none;}
+  .sidebar a.lvl2{padding-left:20px; font-size:12.5px; color:var(--muted);}
+
+  .content{flex:1; min-width:0; padding:36px 40px 100px;}
+
+  /* ---------- cover ---------- */
+  .cover{
+    background:linear-gradient(135deg, #001A4D 0%, #0044CC 55%, var(--blue) 100%);
+    border-radius:20px; padding:48px 44px; color:#fff; margin-bottom:40px;
+    position:relative; overflow:hidden;
+  }
+  .cover::after{
+    content:""; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+    border-radius:50%; background:rgba(255,255,255,.08);
+  }
+  .cover .eyebrow{font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#B9D3FF; margin-bottom:14px;}
+  .cover h1{font-size:34px; font-weight:800; margin:0 0 14px; line-height:1.25; max-width:820px;}
+  .cover p{font-size:15.5px; color:#DCE8FF; max-width:680px; margin:0;}
+  .cover .stats{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .stat-pill{
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22);
+    border-radius:12px; padding:14px 18px; min-width:150px;
+  }
+  .stat-pill .num{font-size:24px; font-weight:800; color:#fff;}
+  .stat-pill .lbl{font-size:12px; color:#CFE0FF; margin-top:2px;}
+
+  section{margin-bottom:56px; scroll-margin-top:76px;}
+  h2{font-size:23px; font-weight:800; color:var(--ink); margin:0 0 6px; display:flex; align-items:center; gap:10px;}
+  h2 .n{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border-radius:9px; background:var(--blue-bg); color:var(--blue);
+    font-size:14px; font-weight:800; flex:0 0 auto;
+  }
+  h3{font-size:16.5px; font-weight:700; color:var(--ink); margin:26px 0 10px;}
+  .section-sub{color:var(--muted); font-size:14.5px; margin:0 0 22px; max-width:760px;}
+  p{margin:0 0 14px; font-size:14.5px;}
+
+  .card{
+    background:var(--white); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+
+  .tag{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:800; letter-spacing:.03em; padding:3px 9px; border-radius:6px;}
+  .tag-zbs{background:var(--blue-bg); color:var(--blue-dark);}
+  .tag-gateway{background:var(--amber-bg); color:var(--amber);}
+  .tag-shared{background:var(--green-bg); color:var(--green);}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--white); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  th,td{text-align:left; padding:12px 16px; border-bottom:1px solid var(--border);}
+  th{background:#FAFBFF; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; font-weight:800;}
+  tr:last-child td{border-bottom:none;}
+  td.num{font-weight:800; color:var(--ink); text-align:center; width:90px;}
+  td.arrow{text-align:center; color:var(--blue); font-weight:800; width:40px;}
+
+  .compare{display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:stretch; margin:18px 0;}
+  .compare .col{background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);}
+  .compare .col.old{border-top:4px solid var(--muted);}
+  .compare .col.new{border-top:4px solid var(--blue);}
+  .compare .col h4{margin:0 0 12px; font-size:14px; font-weight:800; color:var(--ink);}
+  .compare .mid{display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--blue);}
+  .steplist{list-style:none; margin:0; padding:0; counter-reset:step;}
+  .steplist li{
+    counter-increment:step; position:relative; padding:9px 0 9px 34px; font-size:13.5px; color:var(--body);
+    border-bottom:1px dashed var(--border);
+  }
+  .steplist li:last-child{border-bottom:none;}
+  .steplist li::before{
+    content:counter(step); position:absolute; left:0; top:8px;
+    width:22px; height:22px; border-radius:7px; background:var(--bg); color:var(--muted);
+    font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center;
+  }
+  .old .steplist li::before{background:#F1F2F5; color:#9098A8;}
+  .new .steplist li::before{background:var(--blue-bg); color:var(--blue);}
+  .steplist li.optional{color:var(--muted); font-style:italic;}
+  .steplist li.optional::before{content:"~"; }
+
+  .shot{
+    border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff;
+    box-shadow:var(--shadow);
+  }
+  .shot img{display:block; width:100%; height:auto;}
+  .shot-cap{padding:10px 14px; font-size:12.5px; color:var(--muted); border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:8px; align-items:center;}
+
+  .screen-block{margin-bottom:34px; padding-bottom:34px; border-bottom:1px solid var(--border);}
+  .screen-block:last-child{border-bottom:none;}
+  .screen-head{display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .screen-head .title{font-size:16px; font-weight:800; color:var(--ink);}
+  .screen-body{display:grid; grid-template-columns:1.05fr .95fr; gap:26px; align-items:start; margin-top:14px;}
+  .screen-notes ul{margin:0; padding-left:18px; font-size:13.5px;}
+  .screen-notes li{margin-bottom:8px;}
+
+  .principle{
+    display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--border);
+  }
+  .principle:last-child{border-bottom:none;}
+  .principle .ico{
+    flex:0 0 40px; height:40px; width:40px; border-radius:11px; background:var(--blue-bg); color:var(--blue);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;
+  }
+  .principle h4{margin:0 0 4px; font-size:14.5px; font-weight:800; color:var(--ink);}
+  .principle p{margin:0; font-size:13.5px;}
+
+  .callout{
+    display:flex; gap:12px; background:var(--blue-bg); border:1px solid #C9DFFF; border-radius:12px;
+    padding:14px 16px; font-size:13.5px; color:var(--blue-dark); margin:16px 0;
+  }
+  .callout.amber{background:var(--amber-bg); border-color:#F1DBAE; color:var(--amber);}
+
+  .refs{list-style:none; margin:0; padding:0;}
+  .refs li{padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .refs li:last-child{border-bottom:none;}
+  .refs .src{color:var(--muted); font-size:12px;}
+
+  .footer-note{color:var(--muted); font-size:12.5px; text-align:center; padding:30px 0 10px;}
+
+  @media (max-width: 980px){
+    .sidebar{display:none;}
+    .content{padding:28px 20px 80px;}
+    .screen-body{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    .compare .mid{transform:rotate(90deg); padding:6px 0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> ZBS Payment Gateway · Design Spec</div>
+  <div class="meta">
+    <span class="badge">FRESH REDESIGN · v1.0</span>
+    <span>Cập nhật 12/08/2026</span>
+    <a href="https://www.figma.com/design/kq3qwulPWXycQfqgG0j4Zy/ZNS?node-id=475-4081&p=f&t=8bJbJ7bHutiZGx8s-0" target="_blank" style="color:#9DC0FF; font-weight:700;">Xem file Figma ↗</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <h4>Tổng quan</h4>
+    <a href="#tom-tat">Tóm tắt điều hành</a>
+    <a href="#tong-quan">Tổng quan — từ ngành đến hệ thống</a>
+    <a href="#pham-vi">Phạm vi &amp; ranh giới sở hữu</a>
+    <h4>Phân tích</h4>
+    <a href="#van-de">Vấn đề của bản hiện tại</a>
+    <a href="#nguyen-tac">Nguyên tắc thiết kế mới</a>
+    <h4>Đặc tả màn hình</h4>
+    <a class="lvl2" href="#s01">01 · Trang nạp tiền (gộp)</a>
+    <a class="lvl2" href="#s02">02 · Quản lý hồ sơ hóa đơn</a>
+    <a class="lvl2" href="#s03">03 · Chuyển khoản ngân hàng · QR động</a>
+    <a class="lvl2" href="#s04">04 · Bàn giao ZaloPay Gateway</a>
+    <h4>Khác</h4>
+    <a href="#doi-chieu">Đối chiếu hình ảnh cũ / mới</a>
+  </nav>
+
+  <main class="content">
+
+    <div class="cover">
+      <div class="eyebrow">ZBS Account · Cổng thanh toán</div>
+      <h1>Fresh UX Redesign — giữ nguyên phương thức thanh toán, làm mới toàn bộ giao diện, giảm mạnh số bước thao tác</h1>
+      <p>Đặc tả này tổng hợp toàn bộ quá trình audit, nghiên cứu và thiết kế lại giao diện nạp tiền vào ZBS Account. Bốn phương thức thanh toán core (Chuyển khoản ngân hàng, QR ZaloPay đa năng, Thẻ ATM/tài khoản nội địa, Thẻ quốc tế) được giữ nguyên — chỉ thay đổi hoàn toàn cách trình bày, gộp bước và loại bỏ trùng lặp.</p>
+    </div>
+
+    <section id="tom-tat">
+      <h2><span class="n">1</span>Tóm tắt điều hành</h2>
+      <p class="section-sub">Không đổi cái gì doanh nghiệp đang dùng để nạp tiền — chỉ đổi cách họ trải nghiệm việc đó.</p>
+      <div class="card">
+        <p><strong>Giữ nguyên toàn bộ 4 phương thức thanh toán core:</strong> Chuyển khoản ngân hàng (VietQR/Napas 247), QR ZaloPay đa năng, Thẻ ATM/tài khoản nội địa, Thẻ quốc tế. Không thêm, không bớt phương thức — vì đây là quyết định nghiệp vụ, không phải vấn đề UX.</p>
+        <p><strong>Làm mới hoàn toàn giao diện:</strong> hệ thống màu, typography, khoảng trắng, phân cấp thông tin được thiết kế lại theo hướng hiện đại, nhất quán trên toàn bộ flow — áp dụng cho tất cả các trang do ZBS sở hữu.</p>
+        <p><strong>Giảm lặp lại, gộp cấu phần dùng chung:</strong> phần quản lý hồ sơ xuất hóa đơn hiện bị dựng lặp lại riêng cho từng phương thức thanh toán thay vì dùng chung một bộ giao diện; với Thẻ ATM/Thẻ quốc tế chưa liên kết, người dùng còn bị đưa qua một trang tổng hợp thừa của ZaloPay. Bản mới gộp các cấu phần lặp lại thành 1 bộ dùng chung cho cả 4 phương thức, và bỏ hẳn trang tổng hợp thừa đó.</p>
+        <p><strong>Thêm hướng xử lý mã QR chuyển khoản:</strong> mã QR chuyển khoản hiện tại là mã tĩnh, không nhúng sẵn số tiền — đề xuất chuyển sang QR động (VietQR/NAPAS) sinh riêng theo từng giao dịch, xem mục 6.3.</p>
+      </div>
+    </section>
+
+    <section id="tong-quan">
+      <h2><span class="n">2</span>Tổng quan — từ ngành đến hệ thống</h2>
+      <p class="section-sub">Đi từ góc nhìn rộng nhất của ngành thanh toán, thu hẹp dần về thị trường Việt Nam, rồi áp dụng cụ thể cho ZBS — trước khi đi vào chi tiết từng màn hình.</p>
+      <div class="card">
+        <h3 style="margin-top:0">Góc rộng nhất — xu hướng thanh toán toàn cầu 2026</h3>
+        <p>Trọng tâm chung của ngành là giảm ma sát tối đa trong quá trình thanh toán. Pattern thắng thế là "một trang duy nhất, thấy hết" — số tiền, phí, phương thức thanh toán hiển thị ngay từ đầu thay vì lộ dần ở cuối luồng; form càng ngắn càng tốt, ưu tiên auto-fill thay vì gõ tay; tín hiệu tin cậy đặt sát khu vực nhập liệu thanh toán; mọi mốc thời gian (nếu có) phải trung thực, không tạo áp lực giả; phí và điều kiện minh bạch ngay từ đầu.</p>
+        <h3>Thu hẹp — thị trường Việt Nam &amp; B2B</h3>
+        <p>Thanh toán QR (VietQR/NAPAS) đã chiếm hơn nửa tổng giao dịch thanh toán tại Việt Nam năm 2025 và tiếp tục tăng mạnh — việc giữ chuyển khoản QR và QR ZaloPay làm phương thức chủ lực là đúng hướng thị trường, không cần bổ sung ví quốc tế cho phân khúc B2B trong nước. Ở mảng cổng thanh toán hóa đơn B2B, người dùng doanh nghiệp ngày càng kỳ vọng trải nghiệm tự phục vụ ngang hàng B2C: thấy rõ tổng tiền/phí/số hóa đơn trước khi xác nhận, tự quản lý hồ sơ và lịch sử giao dịch mà không cần liên hệ hỗ trợ cho thao tác cơ bản.</p>
+        <h3>Áp dụng cho hệ thống ZBS</h3>
+        <p>Đối chiếu 2 tầng xu hướng trên với hệ thống hiện tại, hướng thiết kế lại bám theo 3 trụ cột: gộp số tiền + hồ sơ hóa đơn + phương thức vào một trang duy nhất (đúng pattern "thấy hết từ đầu"); quản lý hồ sơ hóa đơn qua popup không rời trang, dùng chung cho cả 4 phương thức thay vì dựng lặp lại; và sinh mã QR chuyển khoản động thay vì mã tĩnh, loại bỏ thao tác nhập tay lẫn rủi ro chuyển nhầm tài khoản. Bốn phương thức thanh toán core được giữ nguyên hoàn toàn — đây là quyết định nghiệp vụ đã đúng khẩu vị thị trường B2B Việt Nam, không phải vấn đề cần thay đổi.</p>
+      </div>
+    </section>
+
+    <section id="pham-vi">
+      <h2><span class="n">3</span>Phạm vi &amp; ranh giới sở hữu</h2>
+      <p class="section-sub">Trước khi thiết kế, cần phân định rõ phần nào ZBS có thể chỉnh sửa và phần nào thuộc về ZaloPay Gateway — bắt buộc phải giữ nguyên.</p>
+      <table>
+        <tr><th>Khu vực</th><th>Sở hữu</th><th>Có thể chỉnh sửa?</th></tr>
+        <tr><td>Trang chọn phương thức + nhập số tiền</td><td><span class="tag tag-zbs">ZBS</span></td><td>Có — thiết kế lại toàn bộ</td></tr>
+        <tr><td>Hồ sơ xuất hóa đơn (chọn / thêm / sửa)</td><td><span class="tag tag-zbs">ZBS</span></td><td>Có — thiết kế lại toàn bộ</td></tr>
+        <tr><td>Chuyển khoản ngân hàng (QR VietQR + thông tin thủ công)</td><td><span class="tag tag-zbs">ZBS</span></td><td>Có — thiết kế lại toàn bộ</td></tr>
+        <tr><td>Giao diện QR ZaloPay đa năng, nhập thẻ ATM, nhập thẻ quốc tế</td><td><span class="tag tag-gateway">ZaloPay Gateway</span></td><td>Không — chỉ bọc lại phần khung/điều hướng xung quanh</td></tr>
+        <tr><td>Trạng thái giao dịch (thành công / thất bại / hủy / hết hạn / đang xử lý)</td><td><span class="tag tag-gateway">ZaloPay Gateway</span></td><td>Không — ZaloPay đã có sẵn màn hình trạng thái riêng</td></tr>
+      </table>
+    </section>
+
+    <section id="van-de">
+      <h2><span class="n">4</span>Vấn đề của bản hiện tại</h2>
+      <p class="section-sub">Đối chiếu trực tiếp với hệ thống thật đang chạy — không chỉ dựa trên file Figma audit.</p>
+      <table>
+        <tr><th>#</th><th>Vấn đề quan sát được trên hệ thống thật</th><th>Cách bản mới xử lý</th></tr>
+        <tr><td class="num">1</td><td>Nhập địa chỉ hồ sơ hóa đơn bằng 1 ô tự do, chưa phải location tree — dữ liệu khó chuẩn hóa, khó lưu trữ/tra cứu về sau.</td><td>Location tree 2 cấp (Tỉnh/Thành phố → Phường/Xã) + ô địa chỉ chi tiết — xem mục 02b.</td></tr>
+        <tr><td class="num">2</td><td>Vẫn còn lựa chọn "Không xuất hóa đơn" dù hệ thống thực tế đã bắt buộc xuất hóa đơn cho mọi giao dịch — gây hiểu lầm, thừa lựa chọn không có tác dụng.</td><td>Bỏ hẳn lựa chọn này; hồ sơ hóa đơn luôn hiển thị là bắt buộc, không có nhánh "không xuất".</td></tr>
+        <tr><td class="num">3</td><td>Khi danh sách hồ sơ dài phải cuộn để tìm, không có ô tìm kiếm — dễ lạc mất hồ sơ đang tìm.</td><td>Thêm ô tìm kiếm theo tên công ty / mã số thuế ở đầu popup — xem mục 02.</td></tr>
+        <tr><td class="num">4</td><td>Xem/thêm/sửa hồ sơ hóa đơn đều đổi giao diện ngay trên cùng 1 trang (không nhảy trang riêng), nhưng bộ giao diện này bị dựng lặp lại riêng cho từng phương thức thanh toán thay vì dùng chung.</td><td>Gộp thành 1 bộ cấu phần (trang chính + popup) dùng chung cho cả 4 phương thức, không dựng lặp lại theo từng phương thức.</td></tr>
+        <tr><td class="num">5</td><td>Mã QR chuyển khoản hiện tại là mã tĩnh (chỉ mã hoá số tài khoản) — người dùng phải tự gõ tay số tiền và nội dung chuyển khoản; gõ/copy nhầm số tài khoản còn có thể khiến tiền chuyển sang tài khoản chính của Zalo Platforms thay vì tài khoản định danh của doanh nghiệp, không đủ căn cứ xuất hóa đơn và phải chờ hoàn tiền thủ công.</td><td>Sinh mã VietQR động theo từng giao dịch, nhúng sẵn đúng tài khoản định danh + số tiền + nội dung chuyển khoản — người dùng chỉ quét và xác nhận. Xem mục 6.3.</td></tr>
+        <tr><td class="num">6</td><td>Với Thẻ ATM / Thẻ quốc tế chưa có thẻ liên kết sẵn, người dùng bị bắt qua 1 trang tổng hợp "Chọn phương thức thanh toán" của ZaloPay trước khi tới màn nhập thẻ — thừa bước vì loại thẻ được nhận diện tự động qua số thẻ.</td><td>Định tuyến thẳng vào màn nhập thẻ tương ứng, bỏ qua trang tổng hợp — xem mục 6.4.</td></tr>
+      </table>
+      <h3>Minh họa — bản hiện tại</h3>
+      <div class="grid3">
+        <div class="shot">
+          <img src="file:///C:/Users/LAP14044/AppData/Roaming/Claude/local-agent-mode-sessions/7daf109c-04fc-4ecd-add8-e1baf25a1116/13f0165c-d6be-4aec-8792-574dd5746661/local_0b6cc51e-302e-4341-8add-1b418c710cb8/uploads/5cfb0765-2d4e-4f8e-83a7-65881b45187b-1786501716780_image.png" alt="Bản hiện tại — chọn hình thức nạp tiền">
+          <div class="shot-cap"><span>Chọn hình thức nạp tiền</span><span class="tag tag-zbs">ZBS</span></div>
+        </div>
+        <div class="shot">
+          <img src="file:///C:/Users/LAP14044/AppData/Roaming/Claude/local-agent-mode-sessions/7daf109c-04fc-4ecd-add8-e1baf25a1116/13f0165c-d6be-4aec-8792-574dd5746661/local_0b6cc51e-302e-4341-8add-1b418c710cb8/uploads/cc3184b6-c992-41af-841b-06385e3711a0-1786501724528_image.png" alt="Bản hiện tại — chuyển khoản, hồ sơ hóa đơn cuộn">
+          <div class="shot-cap"><span>Chuyển khoản — danh sách hồ sơ hóa đơn phải cuộn</span><span class="tag tag-zbs">ZBS</span></div>
+        </div>
+        <div class="shot">
+          <img src="file:///C:/Users/LAP14044/AppData/Roaming/Claude/local-agent-mode-sessions/7daf109c-04fc-4ecd-add8-e1baf25a1116/13f0165c-d6be-4aec-8792-574dd5746661/local_0b6cc51e-302e-4341-8add-1b418c710cb8/uploads/ef3aadb6-12e6-403c-ab37-d0786487e608-1786501731907_image.png" alt="Bản hiện tại — trang Chuyển khoản riêng">
+          <div class="shot-cap"><span>Chuyển khoản — trang QR riêng</span><span class="tag tag-zbs">ZBS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="nguyen-tac">
+      <h2><span class="n">5</span>Nguyên tắc thiết kế mới</h2>
+      <p class="section-sub">4 nguyên tắc xuyên suốt, áp dụng đồng nhất cho mọi màn hình ZBS sở hữu.</p>
+      <div class="card">
+        <div class="principle">
+          <div class="ico">1</div>
+          <div><h4>Gộp bước lặp lại thành cấu phần dùng chung</h4><p>Hồ sơ hóa đơn không còn phụ thuộc vào phương thức thanh toán nào — dựng một lần, dùng cho cả 4 phương thức.</p></div>
+        </div>
+        <div class="principle">
+          <div class="ico">2</div>
+          <div><h4>Mặc định gọn, mở rộng khi cần</h4><p>Trang đầu chỉ hiện tóm tắt hồ sơ đang dùng; danh sách đầy đủ và form thêm mới chỉ xuất hiện trong popup khi người dùng chủ động bấm "Thay đổi" — không đẩy layout trang chính.</p></div>
+        </div>
+        <div class="principle">
+          <div class="ico">3</div>
+          <div><h4>Không lộ thuật ngữ hệ thống ra giao diện</h4><p>Bỏ các cụm "Cổng ZaloPay", "Popup", "hệ thống tự động…" khỏi copy hiển thị; thay bằng văn phong như người thật đang giải thích, giữ giọng nhất quán trên toàn bộ flow.</p></div>
+        </div>
+        <div class="principle">
+          <div class="ico">4</div>
+          <div><h4>Minh bạch ranh giới sở hữu</h4><p>3 màn hình đi qua ZaloPay Gateway được giữ nguyên 100% nội dung gốc, chỉ bọc thêm khung điều hướng ZBS và nhãn "do ZaloPay quản lý" — không giả vờ đó là giao diện ZBS.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="s01">
+      <h2><span class="n">6</span>Đặc tả chi tiết màn hình mới</h2>
+      <p class="section-sub">Mỗi màn hình dưới đây là ảnh chụp trực tiếp từ file Figma concept, kèm mục đích và điểm thay đổi chính so với bản cũ.</p>
+
+      <div class="screen-block">
+        <div class="screen-head"><span class="title">01 · Trang nạp tiền vào ZBS Account</span><span class="tag tag-zbs">ZBS</span></div>
+        <p style="margin:0">Gộp 3 bước cũ (chọn phương thức, kiểm tra hóa đơn, xác nhận hồ sơ mặc định) thành một trang duy nhất.</p>
+        <div class="screen-body">
+          <div class="shot"><img src="https://www.figma.com/api/mcp/asset/d1ff0db1-3658-49ed-855f-06d5222d1faa.png" alt="Trang nạp tiền mới"></div>
+          <div class="screen-notes">
+            <ul>
+              <li>Số tiền: bỏ dãy chip chọn nhanh, thay bằng dòng hướng dẫn hạn mức tối thiểu/tối đa — rõ ràng, ít yếu tố hơn.</li>
+              <li>Hồ sơ hóa đơn: hiện sẵn hồ sơ đang dùng đầy đủ chi tiết (MST, địa chỉ, người nhận, điện thoại, email) để xác nhận nhanh trước khi thanh toán — không cần click thêm để xem.</li>
+              <li>Phương thức thanh toán: 4 lựa chọn core giữ nguyên</li>
+              <li>Sidebar bên phải tổng hợp toàn bộ chi tiết giao dịch + CTA "Tiếp tục" luôn hiển thị, không cần cuộn.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="s02">
+      <div class="screen-block">
+        <div class="screen-head"><span class="title">02 · Quản lý hồ sơ hóa đơn (popup)</span><span class="tag tag-zbs">ZBS</span><span class="tag tag-shared">Dùng chung 4 phương thức</span></div>
+        <p style="margin:0">Bấm "Thay đổi" trên trang đầu mở popup — nền trang chính không bị đẩy layout, chỉ mờ đi phía sau.</p>
+        <div class="screen-body">
+          <div class="shot"><img src="https://www.figma.com/api/mcp/asset/e0c992c6-30fb-4a8e-9df3-1c8bc8109ff4.png" alt="Popup danh sách hồ sơ hóa đơn"></div>
+          <div class="screen-notes">
+            <ul>
+              <li>Danh sách hồ sơ: tất cả hồ sơ hiển thị <strong>đồng nhất một định dạng</strong> đầy đủ chi tiết — hồ sơ đang dùng chỉ khác ở viền xanh + nhãn "Đang sử dụng".</li>
+              <li>Vùng danh sách bọc trong khung cuộn cố định chiều cao (kèm thanh scrollbar) — xử lý được trường hợp doanh nghiệp có nhiều hồ sơ mà không làm popup phình quá cao.</li>
+              <li>Nút "+ Thêm thông tin xuất hóa đơn mới" chuyển sang trạng thái form ngay trong popup, không mở trang mới.</li>
+              <li><strong>Không còn lựa chọn "Không xuất hóa đơn"</strong> — bản hiện tại vẫn hiện tùy chọn này dù hệ thống thực tế đã bắt buộc xuất hóa đơn, gây hiểu lầm cho người dùng.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="margin-top:22px;">Vì sao chọn popup thay vì trang riêng hoặc hiện ngay trên trang chính</h3>
+        <p>Quản lý hồ sơ hóa đơn là tác vụ phụ, không phải tác vụ chính của trang nạp tiền — và với đa số giao dịch, người dùng chỉ dùng lại đúng hồ sơ mặc định, không cần đổi. Ba phương án được cân nhắc:</p>
+        <div class="grid3">
+          <div class="card">
+            <h4 style="margin:0 0 6px;">✕ Trang riêng</h4>
+            <p style="margin:0; font-size:13.5px;">Tăng thêm ít nhất 1 bước điều hướng bắt buộc vào một luồng vốn đang được gộp gọn lại — đi ngược mục tiêu giảm số bước của toàn bộ bản thiết kế mới, dù không phải ai cũng cần dùng đến tính năng này.</p>
+          </div>
+          <div class="card">
+            <h4 style="margin:0 0 6px;">✕ Hiện ngay trên trang chính</h4>
+            <p style="margin:0; font-size:13.5px;">Danh sách hồ sơ đầy đủ + form thêm mới nếu hiện thường trực trên trang sẽ kéo trang nạp tiền dài ra đáng kể, đẩy phần chọn phương thức thanh toán xuống thấp hơn — gây khó khăn khi khách hàng chỉ muốn chọn nhanh phương thức và thanh toán.</p>
+          </div>
+          <div class="card">
+            <h4 style="margin:0 0 6px; color:var(--blue-dark);">✓ Popup</h4>
+            <p style="margin:0; font-size:13.5px;">Chỉ xuất hiện khi người dùng chủ động bấm "Thay đổi" — đúng bản chất optional của tác vụ này. Không cộng thêm bước điều hướng, không kéo dài trang chính, trang mặc định vẫn gọn để chọn phương thức thanh toán nhanh.</p>
+          </div>
+        </div>
+      </div>
+      <div class="screen-block">
+        <div class="screen-head"><span class="title">02b · Thêm hồ sơ hóa đơn mới (popup)</span><span class="tag tag-zbs">ZBS</span></div>
+        <p style="margin:0">Doanh nghiệp tự điền thông tin; địa chỉ dùng location tree theo đơn vị hành chính 2 cấp hiện hành (từ 07/2025).</p>
+        <div class="screen-body">
+          <div class="shot"><img src="https://www.figma.com/api/mcp/asset/508012a6-9550-4227-825a-bf9dce6712a6.png" alt="Popup thêm hồ sơ hóa đơn"></div>
+          <div class="screen-notes">
+            <ul>
+              <li>Trường bắt buộc: Tên công ty, Mã số thuế, Họ tên và Số điện thoại người nhận, Email nhận hóa đơn điện tử.</li>
+              <li><strong>Địa chỉ công ty dùng location tree 2 cấp</strong>: Tỉnh/Thành phố → Phường/Xã, cộng ô địa chỉ chi tiết (số nhà, đường) — khắc phục đúng vấn đề "cách nhập hiện tại chưa phải location tree nên khó lưu trữ, khó chuẩn hóa dữ liệu" ở bản hiện tại (đang là 1 ô địa chỉ tự do).</li>
+              <li>2 nút hành động rõ ràng: Lưu thông tin này / Hủy bỏ.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="s03">
+      <div class="screen-block">
+        <div class="screen-head"><span class="title">03 · Chuyển khoản ngân hàng</span><span class="tag tag-zbs">ZBS</span></div>
+        <p style="margin:0">Thay theme tối trước đây bằng theme sáng đồng bộ toàn flow; QR chuyển sang mã động thay vì mã tĩnh.</p>
+        <div class="screen-body">
+          <div class="shot"><img src="https://www.figma.com/api/mcp/asset/931ec7e2-5ba5-471d-88e0-7d6caf07866c.png" alt="Màn chuyển khoản ngân hàng mới — QR động"></div>
+          <div class="screen-notes">
+            <ul>
+
+              <li>Thông tin chuyển khoản thủ công (phương án dự phòng) đều có nút "Sao chép" riêng từng trường, kể cả số tiền — không bắt người dùng tự gõ hay tự nhớ.</li>
+              <li>Nội dung chuyển khoản (trường dễ nhập sai nhất, ảnh hưởng trực tiếp đến đối soát) được làm nổi bật bằng khung màu riêng.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 id="s03-qr-dong" style="margin-top:28px;">6.3 · Đề xuất — QR VietQR động</h3>
+        <p>Mã QR chuyển khoản hiện tại là mã tĩnh: chỉ mã hoá số tài khoản, nên khi quét, người dùng vẫn phải tự gõ tay số tiền và nội dung chuyển khoản. Đây là màn <strong>ZBS sở hữu</strong> (không đi qua ZaloPay Gateway), nên việc sửa hoàn toàn nằm trong khả năng của ZBS, không phụ thuộc Zalo.</p>
+        <p>Đề xuất: sinh mã theo chuẩn VietQR (NAPAS/EMVCo) riêng cho từng giao dịch, nhúng sẵn 3 thông tin trong cùng một chuỗi QR — số tài khoản định danh của doanh nghiệp, số tiền chính xác, và nội dung chuyển khoản (mã đối soát). Khi quét bằng app ngân hàng, cả 3 trường tự điền sẵn, người dùng chỉ cần xác nhận.</p>
+        <div class="card">
+          <p style="margin:0"><strong>Vì sao quan trọng hơn một cải tiến UX thông thường:</strong> theo chính sách xuất hóa đơn hiện hành (dựa trên Nghị định 70/2025/NĐ-CP), nếu người dùng gõ/copy nhầm số tài khoản khi chuyển khoản thủ công, tiền có thể vào nhầm tài khoản chính của Zalo Platforms thay vì tài khoản định danh riêng của doanh nghiệp — giao dịch đó không đủ căn cứ xuất hóa đơn, và phải xử lý hoàn tiền thủ công (có thể kéo dài đến ngày làm việc cuối cùng của tháng kế tiếp nếu báo trễ). QR động loại bỏ hoàn toàn bước gõ tay này, giảm trực tiếp rủi ro chuyển nhầm tài khoản.</p>
+        </div>
+        <p style="margin-top:14px;">Mục dữ liệu chuyển khoản thủ công (số tài khoản, tên tài khoản) vẫn được giữ lại làm phương án dự phòng cho ứng dụng ngân hàng nào chưa đọc được QR động — đúng như thiết kế trong ảnh chụp phía trên.</p>
+      </div>
+    </section>
+
+    <section id="s04">
+      <div class="screen-block">
+        <div class="screen-head"><span class="title">04 · Bàn giao ZaloPay Gateway (QR / ATM / Thẻ quốc tế)</span><span class="tag tag-gateway">ZaloPay Gateway</span></div>
+        <p style="margin:0">3 phương thức còn lại giữ nguyên 100% nội dung Gateway — ZBS chỉ bọc thêm khung điều hướng và ghi chú ranh giới sở hữu.</p>
+        <div class="screen-body">
+          <div class="shot">
+            <img src="https://www.figma.com/api/mcp/asset/ffe0b9ab-3ee3-4c64-b552-dbd16fcee8df.png" alt="Bàn giao ZaloPay Gateway — QR đa năng">
+            <div class="shot-cap"><span>QR ZaloPay đa năng</span></div>
+          </div>
+          <div class="screen-notes">
+            <ul>
+              <li>Header ZBS (breadcrumb "← Quay lại", nhãn bước "Bước 2/3") bao ngoài để người dùng không cảm thấy bị chuyển sang app khác.</li>
+              <li>Banner vàng "Phần bên dưới do ZaloPay quản lý — ZBS không chỉnh sửa giao diện này" — minh bạch ranh giới, tránh nhận nhầm lỗi UX của Gateway thành lỗi của ZBS.</li>
+              <li>Nội dung bên trong khung viền vàng đứt nét là bản sao chính xác từ file Gateway gốc — không chỉnh sửa bất kỳ chi tiết nào.</li>
+              <li>Áp dụng cùng pattern này cho Thẻ ATM/tài khoản nội địa và Thẻ quốc tế.</li>
+            </ul>
+            <div class="callout amber" style="margin-top:14px; flex-direction:column; align-items:flex-start; gap:8px;">
+              <div style="font-weight:800;">Điểm sửa quan trọng — bỏ trang tổng hợp trung gian</div>
+              <p style="margin:0;"><strong>Vấn đề ở bản hiện tại:</strong> khi vào Thẻ ATM hoặc Thẻ quốc tế mà chưa chọn thẻ muốn sử dụng, người dùng bị đưa qua một trang "Chọn phương thức thanh toán" của ZaloPay (Mở ứng dụng Zalopay / Mua trước trả sau / Thẻ quốc tế / Quét QR / Thẻ tài khoản nội địa) rồi mới tới màn nhập thẻ. Đây là bước thừa, vì loại thẻ vốn được nhận diện tự động qua số BIN, không cần người dùng chọn lại.</p>
+              <p style="margin:0;"><strong>Cách bản mới xử lý:</strong> vì ZBS đã biết chính xác người dùng chọn "Thẻ ATM" hay "Thẻ quốc tế" ngay từ trang đầu, luồng được định tuyến thẳng vào màn nhập thẻ tương ứng, bỏ qua trang tổng hợp này hoàn toàn. Đây là thay đổi ở logic định tuyến của ZBS — không chỉnh sửa bất kỳ nội dung nào của trang ZaloPay.</p>
+            </div>
+            <ul>
+            </ul>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:22px;">
+          <div class="shot">
+            <img src="file:///C:/Users/LAP14044/AppData/Roaming/Claude/local-agent-mode-sessions/7daf109c-04fc-4ecd-add8-e1baf25a1116/13f0165c-d6be-4aec-8792-574dd5746661/local_0b6cc51e-302e-4341-8add-1b418c710cb8/uploads/b2d5a521-019d-4557-9ab4-ce4062b130d7-1786517073645_image.png" alt="Trang tổng hợp thừa — bản hiện tại">
+            <div class="shot-cap"><span>Trang tổng hợp — bản hiện tại (cần bỏ)</span><span class="tag tag-gateway">ZaloPay Gateway</span></div>
+          </div>
+          <div class="shot">
+            <img src="https://www.figma.com/api/mcp/asset/fba6b06a-a10b-4998-9e71-a4db0afaf911.png" alt="Bàn giao ZaloPay Gateway — Thẻ ATM đi thẳng vào form nhập thẻ">
+            <div class="shot-cap"><span>Minh chứng — bản mới đi thẳng vào màn nhập thẻ</span><span class="tag tag-gateway">ZaloPay Gateway</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="doi-chieu">
+      <h2><span class="n">7</span>Đối chiếu hình ảnh cũ / mới</h2>
+      <p class="section-sub">So sánh trực tiếp cùng một điểm chạm trong flow, giữ nguyên phương thức thanh toán, chỉ đổi cách trình bày.</p>
+      <div class="compare">
+        <div class="col old">
+          <h4>Bản cũ — Chọn phương thức + hồ sơ hóa đơn (đã chung 1 trang, giao diện & luồng cũ)</h4>
+          <div class="shot"><img src="file:///C:/Users/LAP14044/AppData/Roaming/Claude/local-agent-mode-sessions/7daf109c-04fc-4ecd-add8-e1baf25a1116/13f0165c-d6be-4aec-8792-574dd5746661/local_0b6cc51e-302e-4341-8add-1b418c710cb8/uploads/cc3184b6-c992-41af-841b-06385e3711a0-1786501724528_image.png" alt="Bản cũ chọn phương thức và hồ sơ hóa đơn"></div>
+        </div>
+        <div class="mid">→</div>
+        <div class="col new">
+          <h4>Bản mới — Cùng 1 trang, thiết kế & luồng thao tác mới</h4>
+          <div class="shot"><img src="https://www.figma.com/api/mcp/asset/d1ff0db1-3658-49ed-855f-06d5222d1faa.png" alt="Bản mới trang nạp tiền gộp"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">ZBS Payment Gateway — Fresh UX Redesign Spec · Biên soạn dựa trên audit &amp; thiết kế trực tiếp trên Figma</div>
+
+  </main>
+</div>
+
+</body>
+</html>

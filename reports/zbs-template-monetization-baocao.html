@@ -1,0 +1,1199 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ZBS Template Message — Báo cáo đầy đủ: Rà soát tiềm năng Monetization</title>
+<style>
+  :root{
+    --ink:#1f2933;
+    --ink-soft:#52606d;
+    --line:#e2e5ea;
+    --line-soft:#edeff2;
+    --bg:#f3f4f7;
+    --card:#ffffff;
+    --accent:#2451b6;
+    --accent-soft:#eaf0fd;
+    --accent-ink:#193a8a;
+    --amber:#9a6400;
+    --amber-bg:#fdf1d9;
+    --purple:#5b3aa8;
+    --purple-bg:#efe9fb;
+    --purple-deep:#3d1f80;
+    --purple-deep-bg:#e6ddf9;
+    --gray-bg:#eef0f3;
+    --gray-ink:#4b5563;
+    --radius:14px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Segoe UI","Inter",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.62;
+    font-size:16px;
+  }
+
+  .report-shell{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 20px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header{
+    background:linear-gradient(135deg,#193a8a 0%,#2451b6 55%,#3d6bd6 100%);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:32px 32px 26px;
+    margin-bottom:22px;
+    box-shadow:0 10px 30px -12px rgba(24,44,97,.45);
+  }
+  .report-kicker{
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:12.5px;
+    font-weight:600;
+    opacity:.85;
+    margin:0 0 10px;
+  }
+  .report-title{
+    margin:0 0 14px;
+    font-size:clamp(22px,3vw,30px);
+    line-height:1.28;
+    font-weight:700;
+    max-width:56ch;
+  }
+  .report-meta{
+    margin:0;
+    font-size:14.5px;
+    line-height:1.6;
+    color:rgba(255,255,255,.92);
+    max-width:78ch;
+  }
+  .report-meta strong{ color:#fff; }
+  .report-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:16px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.28);
+    color:#fff;
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:12.5px;
+    font-weight:600;
+  }
+
+  /* ---------- Layout ---------- */
+  .report-layout{
+    display:grid;
+    grid-template-columns:250px minmax(0,1fr);
+    gap:22px;
+    align-items:start;
+  }
+
+  .report-nav{
+    position:sticky;
+    top:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 16px;
+    max-height:calc(100vh - 40px);
+    overflow-y:auto;
+  }
+  .report-nav-title{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .report-nav ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:navcount;
+  }
+  .report-nav li{ margin:0; }
+  .report-nav a{
+    display:block;
+    padding:7px 8px;
+    border-radius:8px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-size:13.5px;
+    line-height:1.4;
+    border-left:2px solid transparent;
+  }
+  .report-nav a:hover{
+    background:var(--accent-soft);
+    color:var(--accent-ink);
+    border-left-color:var(--accent);
+  }
+
+  .report-nav-mobile{ display:none; }
+
+  /* ---------- Main content ---------- */
+  .report-root{ min-width:0; }
+
+  .report-section{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 28px 28px;
+    margin-bottom:18px;
+    overflow-wrap:break-word;
+  }
+  .report-section:first-child{
+    background:var(--accent-soft);
+    border-color:#d7e2fb;
+  }
+
+  .report-root h2{
+    font-size:20.5px;
+    line-height:1.35;
+    margin:0 0 14px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--line-soft);
+    color:var(--accent-ink);
+    scroll-margin-top:18px;
+  }
+  .report-root h3{
+    font-size:16.5px;
+    line-height:1.4;
+    margin:26px 0 10px;
+    color:var(--accent-ink);
+    scroll-margin-top:18px;
+  }
+  .report-root h3:first-of-type{ margin-top:6px; }
+
+  .report-root p{ margin:0 0 13px; max-width:88ch; }
+  .report-root ul, .report-root ol{ margin:0 0 13px; padding-left:22px; }
+  .report-root li{ margin:0 0 6px; }
+  .report-root li:last-child{ margin-bottom:0; }
+  .report-root li > p{ margin:0; }
+
+  .report-root a{ color:var(--accent); text-decoration:underline; text-decoration-color:#c3d3f7; text-underline-offset:2px; }
+  .report-root a:hover{ text-decoration-color:currentColor; }
+
+  .report-root strong{ color:#111827; font-weight:700; }
+
+  .report-root code{
+    background:#f0f1f4;
+    border:1px solid #e2e4e9;
+    border-radius:5px;
+    padding:1px 6px;
+    font-size:.9em;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+    color:#8f2d56;
+  }
+
+  .report-root blockquote{
+    margin:0 0 13px;
+    padding:10px 16px;
+    border-left:3px solid var(--accent);
+    background:var(--accent-soft);
+    border-radius:0 8px 8px 0;
+    color:var(--ink-soft);
+  }
+  .report-root blockquote p{ margin:0 0 6px; }
+  .report-root blockquote p:last-child{ margin-bottom:0; }
+
+  .report-root hr{ display:none; }
+
+  em{ font-style:italic; color:var(--ink-soft); }
+
+  /* ---------- Tables ---------- */
+  .table-wrap{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin:4px 0 18px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    scrollbar-width:thin;
+    scrollbar-color:#b7c2d6 #f1f3f6;
+  }
+  .table-wrap::-webkit-scrollbar{ height:9px; }
+  .table-wrap::-webkit-scrollbar-track{ background:#f1f3f6; }
+  .table-wrap::-webkit-scrollbar-thumb{ background:#b7c2d6; border-radius:6px; }
+  .table-wrap::-webkit-scrollbar-thumb:hover{ background:#8fa0bd; }
+  table{
+    width:100%;
+    min-width:640px;
+    border-collapse:collapse;
+    font-size:13.6px;
+    line-height:1.5;
+  }
+  thead th{
+    position:sticky;
+    top:0;
+    background:#eef1f7;
+    color:var(--accent-ink);
+    text-align:left;
+    font-weight:700;
+    padding:10px 12px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:10px 12px;
+    border-bottom:1px solid var(--line-soft);
+    vertical-align:top;
+    overflow-wrap:anywhere;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:nth-child(even){ background:#fafbfc; }
+  tbody tr:hover{ background:#f3f6fd; }
+
+  td.num{
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    font-feature-settings:"tnum" 1;
+  }
+
+  /* first column of comparison-style tables reads as a row label */
+  table tr td:first-child strong{ color:var(--accent-ink); }
+
+  /* ---------- Mini bar chart block ---------- */
+  .chart-block{
+    margin:18px 0;
+    padding:16px 18px;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .chart-block-title{
+    font-weight:700;
+    color:var(--accent-ink);
+    margin-bottom:14px;
+    font-size:14.5px;
+  }
+  .mini-chart-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .mini-chart-label{
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .bar-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .bar-name{
+    width:60px;
+    flex:0 0 auto;
+    font-size:13px;
+    color:var(--ink);
+  }
+  .bar-track{
+    flex:1;
+    min-width:0;
+    background:#fff;
+    border-radius:6px;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .bar-fill{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    padding:5px 8px;
+    white-space:nowrap;
+    border-radius:6px;
+  }
+  .bar-fill.alt{ background:var(--amber); }
+  .chart-block-note{
+    margin-top:14px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  @media (max-width:640px){
+    .mini-chart-grid{ grid-template-columns:1fr; gap:18px; }
+  }
+
+  /* ---------- Flow diagram (step-by-step mechanism) ---------- */
+  .flow-diagram{
+    margin:16px 0;
+    padding:16px 18px;
+    background:var(--accent-soft);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .flow-diagram-title{
+    font-weight:700;
+    color:var(--accent-ink);
+    margin-bottom:14px;
+    font-size:14.5px;
+  }
+  .flow-steps{
+    display:flex;
+    align-items:stretch;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .flow-step{
+    flex:1 1 170px;
+    min-width:150px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+  }
+  .flow-step-num{
+    flex:0 0 auto;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .flow-step-text{
+    font-size:12.5px;
+    line-height:1.45;
+    color:var(--ink);
+  }
+  .flow-arrow{
+    flex:0 0 auto;
+    align-self:center;
+    color:var(--ink-soft);
+    font-size:18px;
+    font-weight:700;
+  }
+  .flow-diagram-note{
+    margin-top:12px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  @media (max-width:768px){
+    .flow-steps{ flex-direction:column; }
+    .flow-arrow{ transform:rotate(90deg); align-self:flex-start; margin-left:10px; }
+  }
+
+  /* ---------- Badges (Cấp độ) ---------- */
+  .badge{
+    display:inline-block;
+    padding:3px 11px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    white-space:nowrap;
+    letter-spacing:.01em;
+  }
+  .badge-foundation{ background:var(--gray-bg); color:var(--gray-ink); }
+  .badge-basic{ background:#dcecff; color:#0d4d8c; }
+  .badge-medium{ background:var(--amber-bg); color:var(--amber); }
+  .badge-advanced{ background:var(--purple-bg); color:var(--purple); }
+  .badge-advanced-max{ background:var(--purple-deep-bg); color:var(--purple-deep); }
+
+  /* ---------- Footer ---------- */
+  .report-footer{
+    margin-top:10px;
+    padding:16px 4px 0;
+    color:var(--ink-soft);
+    font-size:12.5px;
+    text-align:center;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:960px){
+    .report-layout{ grid-template-columns:1fr; }
+    .report-nav{ display:none; }
+    .report-nav-mobile{
+      display:block;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:6px 16px;
+      margin-bottom:18px;
+    }
+    .report-nav-mobile summary{
+      cursor:pointer;
+      padding:10px 0;
+      font-weight:700;
+      font-size:13.5px;
+      color:var(--accent-ink);
+      list-style:none;
+    }
+    .report-nav-mobile summary::-webkit-details-marker{ display:none; }
+    .report-nav-mobile ol{ list-style:none; margin:0; padding:0 0 12px; }
+    .report-nav-mobile a{
+      display:block;
+      padding:8px 4px;
+      color:var(--ink-soft);
+      text-decoration:none;
+      font-size:13.5px;
+      border-top:1px solid var(--line-soft);
+    }
+  }
+
+  @media (max-width:640px){
+    .report-shell{ padding:16px 12px 40px; }
+    .report-header{ padding:22px 18px 18px; }
+    .report-section{ padding:18px 16px 20px; }
+    .report-root h2{ font-size:18.5px; }
+    table{ font-size:12.8px; }
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    body{ background:#fff; }
+    .report-shell{ max-width:100%; padding:0; }
+    .report-header{
+      color:#111;
+      background:#fff !important;
+      border:1px solid #ccc;
+      box-shadow:none;
+      print-color-adjust:exact;
+      -webkit-print-color-adjust:exact;
+    }
+    .report-title{ color:#111; }
+    .report-meta{ color:#333; }
+    .chip{ background:#f0f0f0; color:#111; border-color:#ccc; }
+    .report-layout{ display:block; }
+    .report-nav, .report-nav-mobile{ display:none !important; }
+    .report-section{
+      border:1px solid #ddd;
+      box-shadow:none;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    .table-wrap{ overflow-x:visible; border:1px solid #ddd; }
+    table{ min-width:0 !important; width:100% !important; table-layout:fixed; font-size:10.5px; }
+    table td, table th{ overflow-wrap:anywhere; word-break:break-word; }
+    thead th{ position:static; background:#eee !important; white-space:normal !important; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .chart-block{ background:#f4f4f4 !important; break-inside:avoid; page-break-inside:avoid; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .bar-fill{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .flow-diagram{ background:#f4f4f4 !important; break-inside:avoid; page-break-inside:avoid; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .flow-step-num{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .flow-steps{ flex-direction:column; align-items:stretch; }
+    .flow-step{ flex:0 0 auto; }
+    .flow-arrow{ display:none; }
+    td.num{ white-space:normal !important; }
+    a{ color:#111; text-decoration:underline; }
+    .badge{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+<div class="report-shell">
+
+  <header class="report-header">
+    <p class="report-kicker">ZBS Template Message · Phân tích nội bộ PO</p>
+    <h1 class="report-title">ZBS Template Message — Báo cáo đầy đủ: Rà soát tiềm năng Monetization</h1>
+    <p class="report-meta">Báo cáo này được viết để đọc độc lập — không cần đọc trước bất kỳ tài liệu nào khác. Toàn bộ bối cảnh, số liệu, tiền lệ thị trường và đề xuất đều được giải thích đầy đủ trong chính tài liệu này.</p>
+    <p class="report-meta">Trạng thái: phân tích nội bộ PO (exploratory), phục vụ việc ra quyết định nên đẩy hạng mục nào đi tiếp — chưa chuyển việc cho BD/Platform/Legal/Data.</p>
+    <div class="report-chips">
+      <span class="chip">4 hạng mục phân tích</span>
+      <span class="chip">ZBSP-7 · ZBSP-14 · ZBSP-26 · ZBSP-27</span>
+      <span class="chip">Cập nhật 13/08/2026</span>
+    </div>
+  </header>
+
+  <details class="report-nav-mobile">
+    <summary>Mục lục nhanh</summary>
+    <ol>
+<li><a href="#1-cấu-trúc-giá-hiện-tại-của-zns-4-đòn-bẩy">1. Cấu trúc giá hiện tại của ZNS (4 đòn bẩy)</a></li>
+<li><a href="#2-bảng-so-sánh-tổng-hợp">2. Bảng so sánh tổng hợp</a></li>
+<li><a href="#3-zbsp-7--public-hoá-mẫu-templatecomponent-ở-admin-tool">3. ZBSP-7 — Public hoá mẫu template/component ở admin tool</a></li>
+<li><a href="#4-zbsp-14--rating--banner-image-module">4. ZBSP-14 — Rating + banner (Image module)</a></li>
+<li><a href="#5-zbsp-26--info-card-smart-send">5. ZBSP-26 — Info Card (Smart Send)</a></li>
+<li><a href="#6-zbsp-27--đồng-hồ-đếm-ngược-động">6. ZBSP-27 — Đồng hồ đếm ngược động</a></li>
+<li><a href="#7-nhận-xét-chuẩn-hóa--tổng-kết-định-hướng">7. Nhận xét chuẩn hóa & tổng kết định hướng</a></li>
+    </ol>
+  </details>
+
+  <div class="report-layout">
+    <nav class="report-nav">
+      <p class="report-nav-title">Mục lục</p>
+      <ol>
+<li><a href="#1-cấu-trúc-giá-hiện-tại-của-zns-4-đòn-bẩy">1. Cấu trúc giá hiện tại của ZNS (4 đòn bẩy)</a></li>
+<li><a href="#2-bảng-so-sánh-tổng-hợp">2. Bảng so sánh tổng hợp</a></li>
+<li><a href="#3-zbsp-7--public-hoá-mẫu-templatecomponent-ở-admin-tool">3. ZBSP-7 — Public hoá mẫu template/component ở admin tool</a></li>
+<li><a href="#4-zbsp-14--rating--banner-image-module">4. ZBSP-14 — Rating + banner (Image module)</a></li>
+<li><a href="#5-zbsp-26--info-card-smart-send">5. ZBSP-26 — Info Card (Smart Send)</a></li>
+<li><a href="#6-zbsp-27--đồng-hồ-đếm-ngược-động">6. ZBSP-27 — Đồng hồ đếm ngược động</a></li>
+<li><a href="#7-nhận-xét-chuẩn-hóa--tổng-kết-định-hướng">7. Nhận xét chuẩn hóa & tổng kết định hướng</a></li>
+      </ol>
+    </nav>
+
+    <main class="report-root">
+
+
+
+<section class="report-section" id="sec-mục-lục"><h2 id="mục-lục">Mục lục</h2>
+<ol type="1">
+<li><a href="#1-cấu-trúc-giá-hiện-tại-của-zns-4-đòn-bẩy">Cấu trúc giá hiện tại của ZNS (4 đòn bẩy)</a></li>
+<li><a href="#2-bảng-so-sánh-tổng-hợp">Bảng so sánh tổng hợp</a></li>
+<li><a href="#3-zbsp-7--public-hoá-mẫu-templatecomponent-ở-admin-tool">ZBSP-7 — Public hoá mẫu template/component ở admin tool</a></li>
+<li><a href="#4-zbsp-14--rating--banner-image-module">ZBSP-14 — Rating + banner (Image module)</a></li>
+<li><a href="#5-zbsp-26--info-card-smart-send">ZBSP-26 — Info Card (Smart Send)</a></li>
+<li><a href="#6-zbsp-27--đồng-hồ-đếm-ngược-động">ZBSP-27 — Đồng hồ đếm ngược động</a></li>
+<li><a href="#7-nhận-xét-chuẩn-hóa--tổng-kết-định-hướng">Nhận xét chuẩn hóa &amp; tổng kết định hướng</a></li>
+</ol>
+<hr/>
+</section><section class="report-section" id="sec-1-cấu-trúc-giá-hiện-tại-của-zns-4-đòn-bẩy"><h2 id="1-cấu-trúc-giá-hiện-tại-của-zns-4-đòn-bẩy">1. Cấu trúc giá hiện tại của ZNS (4 đòn bẩy)</h2>
+<p>Giá 1 tin ZNS được cộng dồn từ 4 thành phần sau (theo tài liệu Confluence "ZNS - Product pricing structure" và theme tái cấu trúc giá):</p>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Đòn bẩy</th>
+<th>Mô tả</th>
+<th>Giá hiện tại (VNĐ)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Loại template (Product ID)</strong></td>
+<td>Rating, Vé xe khách, Voucher, Payment Request, ZNS thường: 200đ. Verification: 300đ</td>
+<td>200-300đ/tin</td>
+</tr>
+<tr class="even">
+<td><strong>2. Thành phần đặc biệt (Components)</strong></td>
+<td>Image module 200đ, Payment module 100đ, Voucher module 100đ. Rating hiện đang <strong>0đ</strong></td>
+<td>0-200đ/tin</td>
+</tr>
+<tr class="odd">
+<td><strong>3. CTA/Button</strong></td>
+<td>100-700đ tùy loại đích đến. Response button hiện <strong>0đ</strong></td>
+<td>0-700đ/tin</td>
+</tr>
+<tr class="even">
+<td><strong>4. Sản phẩm mới hoàn toàn</strong></td>
+<td>Ví dụ đang triển khai: "Vé xe khách" — public hoá cho toàn bộ user tự tạo (thay vì chỉ tạo qua Admin tool), giá 300đ</td>
+<td>Tuỳ sản phẩm</td>
+</tr>
+</tbody>
+</table></div>
+<p>Đợt tái cấu trúc giá đang chạy (~T3/2026) còn bổ sung: CTA "đến trang tải app" (3.000đ — cao nhất bảng giá), chuyển Response button từ 0đ sang có phí, và bắt buộc mỗi template mới phải có ≥1 CTA.</p>
+<p><strong>Ý nghĩa:</strong> khi đánh giá 1 hạng mục có tiềm năng monetize hay không, câu hỏi đầu tiên luôn là "hạng mục này khớp vào đòn bẩy nào trong 4 đòn bẩy trên, hay là 1 đòn bẩy hoàn toàn mới?" — vì mở rộng đòn bẩy có sẵn thường nhanh và ít rủi ro hơn tạo cơ chế giá mới.</p>
+<hr/>
+</section><section class="report-section" id="sec-2-bảng-so-sánh-tổng-hợp"><h2 id="2-bảng-so-sánh-tổng-hợp">2. Bảng so sánh tổng hợp</h2>
+<div class="table-wrap"><table style="min-width:1760px">
+<thead>
+<tr class="header">
+<th>Ticket</th>
+<th>Đòn bẩy</th>
+<th>Cơ chế thu phí đề xuất</th>
+<th>Bằng chứng nhu cầu</th>
+<th>Tiềm năng DT</th>
+<th>Sẵn sàng triển khai</th>
+<th>Rủi ro chính</th>
+<th>Ưu tiên</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ZBSP-7</strong></td>
+<td>4 — Sản phẩm mới</td>
+<td>300đ/tin</td>
+<td><strong>Mạnh</strong> — 6.552 request/7 tháng, ~391.600 tin gửi thực tế</td>
+<td><strong>Cao</strong></td>
+<td>Đã trong roadmap chính thức</td>
+<td>Giảm kiểm soát chất lượng khi public hoá</td>
+<td class="num"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ZBSP-14</strong></td>
+<td>2 — Component</td>
+<td>Image module 200đ (mở rộng phạm vi sang Rating)</td>
+<td>Trung bình — chờ BD</td>
+<td>Trung bình</td>
+<td>Chờ xác nhận nội bộ (BD)</td>
+<td>Là dev mới, effort chưa rõ</td>
+<td class="num"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>ZBSP-26</strong> (Info Card)</td>
+<td>Đòn bẩy mới</td>
+<td>Phí nhỏ theo lượt hiển thị thẻ, có thể mở rộng thêm module</td>
+<td>Trung bình — tiền lệ thị trường mạnh</td>
+<td><strong>Cao</strong> (chủ yếu gián tiếp, dài hạn)</td>
+<td>Cần Platform + Legal xác nhận</td>
+<td>Lạm dụng follow-unfollow để ăn thưởng</td>
+<td class="num"><strong>3</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ZBSP-27</strong> (Đồng hồ đếm ngược)</td>
+<td>Đòn bẩy mới</td>
+<td>Theo giai đoạn, tăng dần</td>
+<td>Trung bình — tiền lệ thị trường rõ</td>
+<td>Trung bình, tăng theo giai đoạn</td>
+<td>Multi-phase, phụ thuộc đội ngoài</td>
+<td>Đồng hồ đếm ngược giả (chưa cập nhật real-time)</td>
+<td class="num"><strong>4</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+</section><section class="report-section" id="sec-3-zbsp-7--public-hoá-mẫu-templatecomponent-ở-admin-tool"><h2 id="3-zbsp-7--public-hoá-mẫu-templatecomponent-ở-admin-tool">3. ZBSP-7 — Public hoá mẫu template/component ở admin tool</h2>
+<p><strong>Đòn bẩy 4 (Sản phẩm mới) — Ưu tiên cao nhất</strong></p>
+<p><strong>Hiện trạng:</strong> một số loại template (QR code, Ví xe, Response, Template đánh giá dịch vụ, Template xác thực, Template yêu cầu thanh toán, Template voucher, và các loại phức tạp khác) <strong>không tự tạo được qua self-service</strong> — OA phải gửi ticket, một đội ngũ Admin nhỏ (~6 người tạo, ~6 người duyệt) xử lý thủ công từng cái một. Quy trình: OA/Sales tạo ticket → 1 nhân sự Admin tạo template thủ công → 1 nhân sự khác duyệt lại → xong mới đưa vào sử dụng.</p>
+<p><strong>Khớp trực tiếp với sáng kiến đang chạy:</strong> Theme tái cấu trúc giá đã xác nhận kế hoạch "Vé xe khách — public cho all user thay vì tạo trên admin tool", giá 300đ, dự kiến demo T4/2026 và chính thức trong Q2/2026.</p>
+<h3 id="số-liệu-chi-tiết-nguồn-3-file-dữ-liệu-nội-bộ-giai-đoạn-janjul-2026">Số liệu chi tiết (nguồn: 3 file dữ liệu nội bộ, giai đoạn Jan–Jul 2026)</h3>
+<p>Trong 8 loại template thủ công đang chờ public hoá, phần số liệu dưới đây tập trung riêng vào <strong>QR code và Vé xe</strong> — 2 loại duy nhất có đủ dữ liệu sản lượng gửi tin thực tế, và là bằng chứng rõ nhất cho tiềm năng monetize của ZBSP-7.</p>
+<p><strong>Khối lượng request theo tháng — QR code &amp; Vé xe:</strong></p>
+<div class="table-wrap"><table style="min-width:1980px">
+<thead>
+<tr class="header">
+<th>Loại template</th>
+<th>Jan</th>
+<th>Feb</th>
+<th>Mar</th>
+<th>Apr</th>
+<th>May</th>
+<th>Jun</th>
+<th>Jul</th>
+<th>Tổng</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>QR code</td>
+<td class="num">12</td>
+<td class="num">3</td>
+<td class="num">24</td>
+<td class="num">26</td>
+<td class="num">41</td>
+<td class="num">21</td>
+<td class="num">1</td>
+<td class="num"><strong>128</strong></td>
+</tr>
+<tr class="even">
+<td>Vé xe</td>
+<td class="num">16</td>
+<td class="num">12</td>
+<td class="num">29</td>
+<td class="num">15</td>
+<td class="num">18</td>
+<td class="num">11</td>
+<td class="num">0</td>
+<td class="num"><strong>101</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Tổng 2 loại</strong></td>
+<td class="num"><strong>28</strong></td>
+<td class="num"><strong>15</strong></td>
+<td class="num"><strong>53</strong></td>
+<td class="num"><strong>41</strong></td>
+<td class="num"><strong>59</strong></td>
+<td class="num"><strong>32</strong></td>
+<td class="num"><strong>1</strong></td>
+<td class="num"><strong>229</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><em>2 loại này chỉ chiếm ~3,5% trong tổng 6.552 request thủ công của cả 8 loại template trong 7 tháng — các loại còn lại (voucher, payment request, response, rating, xác thực...) không thuộc trọng tâm phân tích ở đây.</em></p>
+<p><strong>Sản lượng gửi tin thực tế — bằng chứng giá trị mạnh nhất:</strong></p>
+<div class="table-wrap"><table style="min-width:880px">
+<thead>
+<tr class="header">
+<th>Loại temp</th>
+<th>Số template có gửi tin</th>
+<th>Tổng tin gửi Jan–Jul 2026</th>
+<th>Tin gửi TB/template</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>QR code</td>
+<td>~86 template</td>
+<td><strong>~180.000 tin</strong></td>
+<td>~2.100 tin/template</td>
+</tr>
+<tr class="even">
+<td>Vé xe</td>
+<td>~73 template</td>
+<td><strong>~211.600 tin</strong></td>
+<td>~2.900 tin/template</td>
+</tr>
+<tr class="odd">
+<td><strong>Tổng</strong></td>
+<td><strong>~159 template</strong></td>
+<td><strong>~391.600 tin</strong></td>
+<td><strong>~2.460 tin/template</strong></td>
+</tr>
+</tbody>
+</table></div>
+<div class="chart-block">
+<div class="chart-block-title">QR code &amp; Vé xe: request thủ công rất ít, sản lượng gửi tin rất lớn (Jan–Jul 2026)</div>
+<div class="mini-chart-grid">
+<div class="mini-chart">
+<div class="mini-chart-label">Số request thủ công (7 tháng)</div>
+<div class="bar-row"><span class="bar-name">QR code</span><div class="bar-track"><div class="bar-fill" style="width:100%">128</div></div></div>
+<div class="bar-row"><span class="bar-name">Vé xe</span><div class="bar-track"><div class="bar-fill" style="width:79%">101</div></div></div>
+</div>
+<div class="mini-chart">
+<div class="mini-chart-label">Tổng tin gửi thực tế (7 tháng)</div>
+<div class="bar-row"><span class="bar-name">QR code</span><div class="bar-track"><div class="bar-fill alt" style="width:85%">~180.000</div></div></div>
+<div class="bar-row"><span class="bar-name">Vé xe</span><div class="bar-track"><div class="bar-fill alt" style="width:100%">~211.600</div></div></div>
+</div>
+</div>
+<div class="chart-block-note">229 request thủ công (128 QR code + 101 Vé xe) đã tạo ra gần 400.000 tin nhắn gửi thực tế — request rất ít nhưng giá trị sử dụng thực tế rất lớn.</div>
+</div>
+<p><strong>Điểm mấu chốt:</strong> chỉ với <strong>229 request thủ công</strong>, nhóm QR code + Vé xe đã tạo ra gần <strong>400.000 tin nhắn gửi thực tế</strong>. Dù số lượng request ít, giá trị sử dụng sau khi tạo lại rất lớn.</p>
+<p><strong>Đề xuất:</strong> đây không còn là "tiềm năng" mà là <strong>đang được lên kế hoạch chính thức</strong>. Vai trò của ZBSP-7 là đảm bảo phạm vi public hoá đủ rộng (không chỉ Vé xe khách mà cả QR code — volume tương đương) và đẩy nhanh tốc độ launch dựa trên bằng chứng volume đã có.</p>
+<p><strong>Rủi ro:</strong> public hoá đồng nghĩa giảm kiểm soát chất lượng so với luồng duyệt thủ công hiện tại — cần cơ chế validate tự động thay thế vai trò Admin.</p>
+<p><strong>Giới hạn dữ liệu:</strong> sản lượng gửi tin chỉ có cho QR code/Ví xe (chưa có cho 6 loại temp thủ công còn lại); số liệu được cộng thủ công, cần đối chiếu lại bằng SUM Excel trước khi dùng chính thức.</p>
+<hr/>
+</section><section class="report-section" id="sec-4-zbsp-14--rating--banner-image-module"><h2 id="4-zbsp-14--rating--banner-image-module">4. ZBSP-14 — Rating + banner (Image module)</h2>
+<p><strong>Đòn bẩy 2 (Component) — Đang chờ xác nhận, chưa chốt triển khai</strong></p>
+<ul>
+<li><strong>Hiện trạng:</strong> Rating hiện KHÔNG hỗ trợ thêm ảnh (là dev mới, không phải mở rộng cấu hình), và Rating hiện đang thu phí <strong>0đ</strong> ở cả 2 cấp Product ID lẫn Component — là loại template duy nhất trong bảng giá chưa có component nào tính phí.</li>
+<li><strong>Cơ hội:</strong> nếu bổ sung Image module cho Rating, đây sẽ là component trả phí đầu tiên gắn được vào Rating (Image module đang có giá 200đ ở các loại template khác) — không cần tạo mức giá mới, chỉ mở rộng phạm vi áp dụng.</li>
+<li><strong>Dữ liệu quy mô tham khảo:</strong> theo dữ liệu nội bộ (1/1–22/1/2026), riêng nhóm template Rating dạng cũ (chưa có nút) đã ghi nhận 1.634 template ID đang hoạt động.</li>
+<li><strong>Trạng thái (12/08/2026):</strong> PO đang làm việc với BD để xác nhận số lượng yêu cầu thực tế trước khi đánh giá khả năng triển khai kỹ thuật. Câu hỏi đã gửi BD: (1) đã có bao nhiêu khách hỏi/yêu cầu, 1 khách hay lặp lại từ nhiều khách, (2) khách muốn đặt loại ảnh gì và mục đích dùng, (3) yêu cầu này có đang chặn deal/go-live cụ thể nào không.</li>
+<li><strong>Việc tiếp theo:</strong> chờ phản hồi BD rồi mới quyết định đưa vào roadmap hay không.</li>
+</ul>
+<hr/>
+</section><section class="report-section" id="sec-5-zbsp-26--info-card-smart-send"><h2 id="5-zbsp-26--info-card-smart-send">5. ZBSP-26 — Info Card (Smart Send)</h2>
+<h3 id="51-info-card-là-gì-hoạt-động-như-thế-nào">5.1 Info Card là gì, hoạt động như thế nào</h3>
+<p><strong>Info Card</strong> là một thẻ nhỏ, tự động xuất hiện ngay sau khi OA gửi tin ZNS cho khách hàng <strong>chưa follow OA đó</strong>, mời khách bấm Follow — có ảnh + tên OA + nút Follow, và tùy chọn kèm thêm phần thưởng nhỏ (voucher).</p>
+<p><strong>Vì sao làm:</strong> giúp OA <strong>tăng follower thật</strong> — một tài sản lâu dài, không mất đi sau 1 tin — theo đúng cách Messenger và Shopee đang làm (chi tiết 2 tiền lệ này ở mục 5.2). Đây không chỉ là giá trị mang tính biểu tượng: khi khách hàng follow OA, OA được <strong>mở khoá thêm kênh gửi broadcast message</strong> — tin thông báo chương trình khuyến mãi, ưu đãi — tới đúng nhóm khách đã follow, thay vì chỉ giới hạn ở tin giao dịch/CSKH như trước khi follow. Follower càng nhiều, tập khách hàng OA có thể chủ động quảng bá càng lớn, thúc đẩy giao dịch lặp lại mà không phải trả thêm phí quảng cáo để tiếp cận lại từng người.</p>
+<p><strong>Giá trị doanh nghiệp (OA) cảm nhận được — trọng tâm đánh giá</strong> (khách hàng của ZBS là doanh nghiệp/OA, nên đây là góc nhìn chính; trải nghiệm người nhận tin — khách hàng cuối — là yếu tố hỗ trợ cho giá trị này, không phải mục tiêu đánh giá độc lập):</p>
+<ol type="1">
+<li><strong>Mở khoá kênh broadcast khuyến mãi</strong> tới nhóm khách đã follow — lợi ích trực tiếp, dễ cảm nhận nhất, khác hẳn tin ZNS đơn lẻ theo giao dịch.</li>
+<li>Tiếp cận lại khách hàng chủ động hơn, không phải trả thêm phí quảng cáo để tìm lại đúng nhóm khách đã quan tâm.</li>
+<li>Chi phí thu follower rẻ hơn quảng cáo thông thường — thẻ chỉ hiện đúng lúc khách đang tương tác thật với OA.</li>
+<li>OA tự kiểm soát ngân sách thưởng (mức thưởng, số lượng tối đa), không bị ép theo gói cố định.</li>
+<li>Follower là tài sản lâu dài, không mất đi sau 1 tin như ZNS thông thường.</li>
+<li>Theo dõi được số follower tăng thêm qua 1 chỉ số riêng trong ZBS Account — có dữ liệu cụ thể để đánh giá hiệu quả.</li>
+<li>Không tốn thêm phí gửi tin để bật Info Card — chỉ phí nhỏ theo lượt hiển thị + thưởng nếu OA chọn bật.</li>
+</ol>
+<p><strong>Cơ chế hoạt động (sơ bộ — hướng đi chưa chốt, cần Platform xác nhận trước khi triển khai):</strong> Info Card là 1 công tắc bật/tắt do OA tự cấu hình (nội dung thẻ, có bật thưởng hay không, mức thưởng/ngân sách nếu bật), chèn ngay sau tin ZNS gửi cho khách chưa follow. Có cơ chế cooldown (khách đã thấy thẻ phải chờ 1 khoảng thời gian mới thấy lại từ cùng OA) và giới hạn thưởng tối đa 1 lần/khách trong suốt vòng đời quan hệ với 1 OA để chống lạm dụng follow-unfollow. Phạm vi tag/loại tin nhắn được gắn Info Card (áp dụng mọi tag hay loại trừ tin nhạy cảm như OTP/xác nhận thanh toán, xem so sánh với Đồng hồ đếm ngược ở mục 6.6) vẫn là điểm mở, cần PO/Platform chốt trước khi đẩy tiếp.</p>
+<p><strong>Hướng thu phí đề xuất:</strong> phí nhỏ theo <strong>số lần thẻ thực sự hiển thị</strong> cho khách — giống cách ZBS đang tính phí Voucher/Rating theo tin. Chi phí thưởng (nếu OA bật) do OA tự trả riêng. Giá trị Info Card nằm ở 2 tầng: trực tiếp (phí nhỏ, ổn định, theo lượt hiển thị) và <strong>gián tiếp — giá trị chính</strong> (follower tăng → tin ZNS trả phí tăng dài hạn). Nên nhìn Info Card như khoản đầu tư cho tăng trưởng, không phải dòng phí độc lập.</p>
+<p><strong>Lộ trình đề xuất trong bản gốc:</strong> GĐ1 — mở rộng First-time Banner, thêm nút Follow, đổi cơ chế "chỉ 1 lần" sang cooldown 30-60 ngày, chưa cần thưởng, có thể thu phí ngay. GĐ2 — thêm phần thưởng, dùng lại hạ tầng Voucher + Ví QR có sẵn.</p>
+<h3 id="52-thị-trường-đã-làm-gì--toàn-bộ-tiền-lệ-đã-khảo-sát">5.2 Thị trường đã làm gì — toàn bộ tiền lệ đã khảo sát</h3>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Nền tảng</th>
+<th>Cơ chế cụ thể — họ đã làm gì</th>
+<th>Điểm đáng học cho ZBS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Shopee — "Follow Prize"</strong></td>
+<td>Nút Follow luôn có sẵn, miễn phí, không tính phí gì. Nếu seller muốn đẩy mạnh hơn, họ tự mở thêm 1 chương trình có thời hạn (1-90 ngày) kèm thưởng: seller tự đặt mức thưởng, tự đặt giới hạn số lượt, và <strong>tự trả toàn bộ chi phí thưởng</strong>. Khách chỉ nhận được thưởng nếu trước đó chưa từng follow, hoặc chưa từng nhận thưởng follow từ đúng shop đó (chống lạm dụng follow-unfollow)</td>
+<td>Mô hình "seller tự trả thưởng, nền tảng chỉ thu phí dịch vụ nhỏ" — đây chính là mô hình Info Card đang áp dụng (OA tự trả thưởng, ZBS thu phí hiển thị)</td>
+</tr>
+<tr class="even">
+<td><strong>Facebook Messenger — thẻ "Follow [Page]"</strong></td>
+<td>Tự động chèn ngay sau khi 1 Page trả lời tin nhắn cho khách <strong>chưa follow Page đó</strong> — thẻ gồm ảnh cover, tên Page, số follower, nút Follow. Do chính Messenger tự thêm vào, hoàn toàn miễn phí, không tính vào chi phí gửi tin của Page</td>
+<td>Đây là tiền lệ gần nhất về mặt hành vi (chèn thẻ tự động ngay sau tin nhắn thật) — nhưng Messenger làm miễn phí, trong khi ZBS đề xuất thu phí nhỏ theo lượt hiển thị — cần cân nhắc mức độ chấp nhận của OA khi so sánh với tiền lệ miễn phí này</td>
+</tr>
+<tr class="odd">
+<td><strong>Chính ZBS — "First-time Banner" (2021)</strong></td>
+<td>Banner hiện khi khách lần đầu nhận ZNS từ 1 OA, gửi qua kênh hệ thống Zinstant, miễn phí — nhưng chỉ hiện đúng 1 lần duy nhất, chưa có nút Follow</td>
+<td>Đây là hạ tầng kỹ thuật <strong>có sẵn để mở rộng</strong>, không phải xây từ đầu — Info Card về bản chất kỹ thuật là mở rộng First-time Banner (thêm nút Follow, đổi "1 lần" thành "cooldown 30-60 ngày")</td>
+</tr>
+<tr class="even">
+<td><strong>LINE Official Account</strong> (Nhật/Thái/Indonesia)</td>
+<td>Welcome message có thể đính kèm coupon ngay; Rich Menu (menu cố định dưới khung chat) dùng để phát coupon; qua tích hợp bên thứ 3 (Omnichat) có hẳn Game Module: vòng quay may mắn, cào thẻ, slot machine, rút thăm, gashapon — kèm cơ chế referral (mời bạn thêm để có thêm lượt quay)</td>
+<td>LINE phải tích hợp bên thứ 3 mới có gamification — đây là khoảng trống ZBS có thể tự làm chính chủ thay vì OA phải tự tìm vendor ngoài như LINE đang phải làm</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-insight-nền-tảng-zalo-đã-có-sẵn-thứ-mà-các-tiền-lệ-trên-không-có--mini-app">5.3 Insight nền tảng: Zalo đã có sẵn thứ mà các tiền lệ trên không có — Mini App</h3>
+<p>Điểm quan trọng nhất phát hiện khi so sánh chéo các tiền lệ: <strong>Zalo Mini App</strong> là một webview/mini-chương trình có thể mở trực tiếp từ 1 tin nhắn OA, 1 nút bấm, hoặc 1 QR code — chạy ngay trong Zalo, hỗ trợ sẵn loyalty points, membership tier, voucher, ưu đãi cá nhân hoá, và trạng thái real-time. Đây là hạ tầng <strong>chính chủ</strong> của Zalo, không phải add-on phải đi thuê ngoài như cách LINE OA phải tích hợp Omnichat mới có game module. Messenger và WhatsApp Business hoàn toàn không có năng lực tương đương ở quy mô này.</p>
+<p>Nói cách khác: trong khi thị trường (kể cả LINE) phải "vay mượn" hạ tầng bên ngoài để biến follow thành trải nghiệm phong phú, ZBS đang ngồi trên hạ tầng có thể tự làm điều đó chính chủ.</p>
+<h3 id="54-ý-tưởng-phát-triển-không-đi-theo-lối-mòn-tạm-gác-giả-định-về-effort-dev">5.4 Ý tưởng phát triển "không đi theo lối mòn" (tạm gác giả định về effort dev)</h3>
+<p>Xếp theo thứ tự từ <strong>nền tảng</strong> (đúng cơ chế GĐ1 đã mô tả ở mục 5.1, chưa thêm gì) tới <strong>cơ bản</strong> (thêm 1 lớp nhỏ) rồi tới <strong>nâng cao</strong> (cần Mini App hoặc khung chính sách hoàn toàn mới):</p>
+<div class="table-wrap"><table style="min-width:1540px">
+<thead>
+<tr class="header">
+<th>Cấp độ</th>
+<th>Ý tưởng</th>
+<th>Mô tả</th>
+<th>Giá trị cho OA (khách hàng doanh nghiệp)</th>
+<th>Trải nghiệm người nhận tin (yếu tố hỗ trợ)</th>
+<th>Giá trị ZBS (monetize)</th>
+<th>Mức độ mới so với tiền lệ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="badge badge-foundation">Nền tảng</span></td>
+<td><strong>Info Card cơ bản (baseline)</strong></td>
+<td>Chỉ hiện thẻ mời follow ngay sau tin ZNS thật; khách bấm Follow là <strong>kết thúc hành động</strong> — không kèm thưởng, không cá nhân hoá, không gamification. Đây chính là cơ chế GĐ1 đã mô tả ở mục 5.1, dùng làm nền trước khi xét tới các lớp nâng cao bên dưới</td>
+<td>Có ngay kênh tăng follower với chi phí triển khai thấp nhất — không cần đầu tư ngân sách thưởng hay hạ tầng Mini App</td>
+<td>Đơn giản, rõ ràng, không gây rối — chỉ 1 hành động duy nhất (bấm hoặc bỏ qua)</td>
+<td>Có thể thu phí ngay theo lượt hiển thị từ ngày đầu triển khai, không phải chờ các module mở rộng</td>
+<td>Thấp — đúng mô hình Messenger Follow card/First-time Banner đang áp dụng (mục 5.2), chưa có gì khác biệt</td>
+</tr>
+<tr class="even">
+<td><span class="badge badge-basic">Cơ bản</span></td>
+<td><strong>Follow theo ngữ cảnh (context-aware)</strong></td>
+<td>Dùng tín hiệu hành vi (vừa xác nhận đơn hàng thành công, vừa nhận ưu đãi lớn, đúng dịp ra mắt SP) để chọn đúng thời điểm mời follow, thay vì áp cứng 1 quy tắc chung</td>
+<td>Tỷ lệ chuyển đổi follow/tin tăng vì đúng thời điểm khách có thiện cảm với OA</td>
+<td>Giảm cảm giác bị làm phiền — khách ít bị mời follow vào lúc không phù hợp</td>
+<td>Tỷ lệ hiển thị giảm nhưng tỷ lệ follow/tin tăng — phí/lượt hiển thị có thể định giá cao hơn vì "chất lượng" tốt hơn</td>
+<td>Cao — cả Shopee lẫn Messenger đều dùng logic đơn giản (chưa follow → luôn hiện)</td>
+</tr>
+<tr class="odd">
+<td><span class="badge badge-medium">Trung bình</span></td>
+<td><strong>Follow streak / thưởng luỹ tiến</strong></td>
+<td>Không dừng ở thưởng 1 lần — thiết kế các mốc thưởng khi khách tiếp tục tương tác đều đặn với OA</td>
+<td>OA duy trì được tương tác dài hạn với follower, không chỉ có follower "chết" ngay sau khi nhận thưởng</td>
+<td>Khách có lý do quay lại tương tác thay vì follow xong không tương tác lại</td>
+<td>Tăng tần suất tương tác → tăng volume tin ZNS trả phí dài hạn</td>
+<td>Cao — hầu hết tiền lệ chỉ thưởng đúng 1 lần tại thời điểm follow</td>
+</tr>
+<tr class="even">
+<td><span class="badge badge-advanced">Nâng cao</span></td>
+<td><strong>Gamified follow (vòng quay/cào thẻ ngay khi follow)</strong></td>
+<td>Thay thưởng cố định bằng minigame nhỏ mở trong Mini App — tạo cảm giác bất ngờ, tăng tỷ lệ hoàn tất</td>
+<td>Tỷ lệ follow cao hơn dự kiến với cùng ngân sách thưởng — hiệu quả chi phí tốt hơn cho OA</td>
+<td>Trải nghiệm thú vị hơn so với nhận thưởng cố định</td>
+<td>Dòng phí "gamification module" tách khỏi phí hiển thị thẻ cơ bản</td>
+<td>Trung bình — LINE đã làm qua vendor ngoài, ZBS làm chính chủ là điểm khác biệt</td>
+</tr>
+<tr class="odd">
+<td><span class="badge badge-advanced">Nâng cao</span></td>
+<td><strong>Follow-to-membership qua Mini App</strong></td>
+<td>Bấm Follow mở thẳng Mini App để "ghi danh" vào chương trình thành viên (hạng, điểm, ưu đãi theo hạng) ngay lập tức, không chỉ ghi nhận follow đơn thuần</td>
+<td>OA có ngay data thành viên phân hạng để chăm sóc/nhắm mục tiêu, không chỉ 1 danh sách follower thô</td>
+<td>Khách nhận giá trị rõ ràng hơn hẳn 1 voucher đơn lẻ — hỗ trợ tỷ lệ hoàn tất follow cao hơn cho OA</td>
+<td>Mở thêm surface để bán gói loyalty/membership cho OA, không chỉ phí hiển thị thẻ</td>
+<td>Cao — chưa tiền lệ nào (kể cả Shopee) gộp follow + ghi danh thành viên làm 1 bước</td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+</section><section class="report-section" id="sec-6-zbsp-27--đồng-hồ-đếm-ngược-động"><h2 id="6-zbsp-27--đồng-hồ-đếm-ngược-động">6. ZBSP-27 — Đồng hồ đếm ngược động</h2>
+<h3 id="61-vấn-đề-gốc--bối-cảnh-kỹ-thuật">6.1 Vấn đề gốc &amp; bối cảnh kỹ thuật</h3>
+<p>OA hiện tự vẽ đồng hồ đếm ngược cứng vào ảnh banner (ví dụ case zStyle: "06:03:40") — ảnh tĩnh dựng sẵn, số không tự chạy, nếu khách mở tin trễ đồng hồ vẫn hiện số cũ dù thực tế đã hết giờ. Đây là <strong>"đồng hồ giả"</strong>.</p>
+<p><strong>Vì sao:</strong> ZBS dùng công nghệ nội bộ <strong>Zinstant</strong> để dựng/gửi tin. Cách hoạt động: (1) khi gửi tin, hệ thống lấy layout + dữ liệu → dựng thành <strong>1 file cố định (bin file) ngay tại thời điểm gửi</strong>; (2) file đẩy lên server lưu trữ, gửi kèm link tải; (3) thiết bị người nhận <strong>tải về và cache local</strong> — mở lại tin hiển thị đúng file đã tải, không tự tải bản mới; (4) file cache có thời hạn theo loại tin và cơ chế dọn định kỳ.</p>
+<p>Khác email (ảnh tải LẠI mỗi lần mở), Zinstant hiện tại là "dựng 1 lần, tải về, cache lại" — không có bước tải lại mỗi lần mở.</p>
+<h3 id="62-đồng-hồ-đếm-ngược-gắn-với-voucher--thu-thập-trước-dùng-sau">6.2 Đồng hồ đếm ngược gắn với Voucher — thu thập trước, dùng sau</h3>
+<p><strong>Trọng tâm dễ bị bỏ sót nếu chỉ nhìn ở góc độ "hiển thị đúng giờ":</strong> đồng hồ đếm ngược trong ZNS không nên đứng một mình — nó luôn gắn với 1 tin loại Voucher/khuyến mãi. Vai trò thật sự của nó không phải "hiển thị chính xác còn bao nhiêu giây" mà là <strong>tạo đủ áp lực để khách bấm "Thu thập" ngay</strong> — còn việc dùng ưu đãi thật thì để dành cho lúc khác, thoải mái hơn.</p>
+<p><strong>Cơ chế 2 lớp thời gian — đã được cả Shopee lẫn Lazada kiểm chứng ở quy mô lớn:</strong></p>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Lớp</th>
+<th>Vai trò</th>
+<th>Áp lực thời gian</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Lớp 1 — Thu thập (Collect)</strong></td>
+<td>Khách bấm 1 nút "Thu thập" khi thấy ưu đãi — hành động rất nhẹ, chưa cần quyết định mua</td>
+<td>Đồng hồ đếm ngược nên đứng ở đây — đúng nghĩa "khan hiếm cơ hội thu thập"</td>
+</tr>
+<tr class="even">
+<td><strong>Lớp 2 — Sử dụng (Redeem)</strong></td>
+<td>Sau khi thu thập, voucher nằm trong ví riêng của khách, có hạn dùng riêng — thường dài hơn nhiều (vài ngày tới vài tuần)</td>
+<td>Không còn áp lực đếm ngược — khách chủ động quay lại dùng khi có nhu cầu thật</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cả <strong>Shopee</strong> ("Ví Voucher") lẫn <strong>Lazada</strong> ("Ví voucher Lazada") đều dùng đúng mô hình này: voucher được thu thập vào ví, "nằm trong ví cho đến khi bạn sử dụng hoặc hết hạn" — tách hẳn khỏi khoảnh khắc thu thập ban đầu. Đây là hành vi rất quen thuộc với người dùng Việt Nam vì cả 2 sàn TMĐT lớn nhất đều áp dụng.</p>
+<p><strong>Vì sao tách 2 lớp lại quan trọng:</strong> ép khách "mua ngay trong lúc đồng hồ chạy" cho tỷ lệ hoàn tất thấp — khách đang bận, chưa chắc cần mua đúng lúc đó. Chỉ cần 1 hành động rất nhẹ ("Thu thập") thì tỷ lệ hoàn tất cao hơn hẳn — đồng hồ lúc này chỉ cần đủ sức thúc đẩy 1 quyết định nhỏ ("thu thập hay bỏ lỡ"), không phải quyết định lớn ("mua hay không mua").</p>
+<p><strong>Khi khách bấm "Thu thập", luồng đi đâu — không cần xây hạ tầng mới:</strong> ZBS đã có sẵn đúng thứ cần dùng — Voucher module + Ví QR (đã dùng trong roadmap Info Card GĐ2, xem mục 5.1).</p>
+<div class="flow-diagram">
+<div class="flow-diagram-title">Luồng "Thu thập" — dùng lại Voucher module + Ví QR đã có sẵn</div>
+<div class="flow-steps">
+<div class="flow-step"><span class="flow-step-num">1</span><div class="flow-step-text">Tin ZNS loại Voucher, gắn đồng hồ đếm ngược, có CTA "Thu thập"</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">2</span><div class="flow-step-text">Khách bấm "Thu thập" — voucher lưu thẳng vào Ví QR đã có, không mở màn hình mới, không thêm thao tác</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">3</span><div class="flow-step-text">Đồng hồ trên tin ZNS gốc hết vai trò — hạn dùng thật (dài hơn) hiển thị ngay trong Ví QR, màn hình động không bị giới hạn cache Zinstant</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">4</span><div class="flow-step-text">Khách quay lại Ví QR dùng khi có nhu cầu thật — tại điểm bán hoặc trên kênh của OA</div></div>
+</div>
+<div class="flow-diagram-note">Không cần xây thêm nơi lưu trữ mới — Voucher module + Ví QR đã tồn tại và đang được đề xuất tái sử dụng cho cả Info Card lẫn Đồng hồ đếm ngược.</div>
+</div>
+<p><strong>Giá trị mang lại — cả 2 phía:</strong></p>
+<p>Trải nghiệm người nhận tin: giảm hẳn áp lực phải quyết định mua ngay trong lúc đồng hồ đang chạy — chỉ cần 1 thao tác nhẹ, việc mua để dành cho lúc thực sự cần.</p>
+<p>Giá trị doanh nghiệp (OA) cảm nhận được — trọng tâm đánh giá của báo cáo này:</p>
+<ol type="1">
+<li>Mỗi lượt "Thu thập" là 1 tín hiệu quan tâm rõ ràng, đo lường được — tương tự cách theo dõi follower ở Info Card (mục 5).</li>
+<li>Tạo ra 1 tập khách hàng cụ thể "đã thu thập nhưng chưa dùng" — OA có thể nhắm mục tiêu gửi tiếp các tin ZNS nhắc lại (remarketing), tăng vòng lặp chuyển đổi thay vì chỉ có 1 cơ hội bán duy nhất ngay lúc gửi tin đầu.</li>
+<li>Dùng lại đúng Ví QR đã có sẵn — khớp thẳng vào đòn bẩy giá Voucher module đang tồn tại (100đ/tin, mục 1), không cần tạo cơ chế giá hoàn toàn mới.</li>
+</ol>
+<h3 id="63-ai-đã-dùng-đồng-hồ-đếm-ngược-để-thúc-đẩy-thu-thập--thủ-thuật-thị-trường">6.3 Ai đã dùng đồng hồ đếm ngược để thúc đẩy thu thập — thủ thuật thị trường</h3>
+<div class="table-wrap"><table style="min-width:640px">
+<thead>
+<tr class="header">
+<th>Ai dùng</th>
+<th>Thủ thuật cụ thể với đồng hồ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Shopee — "Giờ vàng"</strong> (thị trường Việt Nam, sát nhất với ZBS)</td>
+<td>Đồng hồ đếm ngược tới các mốc cố định trong ngày (0h, 9h, 12h, 15h, 18h, 21h — dịp sale lớn thêm nhiều mốc xen kẽ). Hết giờ là hết đợt, "back mã" (làm mới số lượng voucher) ở mốc tiếp theo. Khuyến khích khách "đặt lời nhắc" trước giờ vàng — biến việc chờ đồng hồ thành 1 thói quen quay lại đều đặn, không chỉ 1 lần</td>
+</tr>
+<tr class="even">
+<td><strong>Amazon Prime Day</strong></td>
+<td>Đồng hồ đi kèm 1 thanh % deal đã được lấy — khách thấy vừa hết giờ, vừa hết hàng, 2 tín hiệu khan hiếm cộng dồn</td>
+</tr>
+<tr class="odd">
+<td><strong>Best Buy</strong></td>
+<td>Đồng hồ + dòng chữ "Chỉ còn 2 suất" đặt cạnh nhau — kết hợp áp lực thời gian với áp lực số lượng</td>
+</tr>
+<tr class="even">
+<td><strong>Booking.com</strong></td>
+<td>"Đặt trong X phút để giữ giá này" + kèm "14 người khác đang xem chỗ này" — ghép đồng hồ với social proof để tăng độ tin cậy của áp lực</td>
+</tr>
+<tr class="odd">
+<td><strong>Ticketmaster</strong></td>
+<td>Sau khi khách thêm vé vào giỏ, đồng hồ 10 phút chạy — hết giờ vé tự trả lại vào kho chung nếu chưa thanh toán xong</td>
+</tr>
+<tr class="even">
+<td><strong>Kickstarter</strong></td>
+<td>Không phải thủ thuật thiết kế mà là 1 quan sát hành vi: tỷ lệ chuyển đổi tăng vọt rõ rệt ở 48 giờ cuối trước khi đồng hồ về 0 — càng gần hạn, hành động càng dồn lại</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Thủ thuật thiết kế chung quanh chính cái đồng hồ (không phụ thuộc ngành):</strong></p>
+<div class="table-wrap"><table style="min-width:640px">
+<thead>
+<tr class="header">
+<th>Kỹ thuật</th>
+<th>Cách làm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Đổi màu theo mức khẩn cấp</td>
+<td>Đỏ khi sắp hết giờ, cam/vàng lúc bình thường — màu tự thay đổi theo % thời gian còn lại</td>
+</tr>
+<tr class="even">
+<td>Hiệu ứng động nhẹ</td>
+<td>Nhấp nháy (pulse) khi gần hết giờ, hiệu ứng "lật số" (flip-clock) — thu hút mắt mà không gây rối</td>
+</tr>
+<tr class="odd">
+<td>Ghép đồng hồ với số lượng còn lại</td>
+<td>2 tín hiệu khan hiếm cùng lúc (thời gian + tồn kho/voucher còn) thay vì chỉ 1</td>
+</tr>
+<tr class="even">
+<td>Đồng hồ cá nhân hoá theo người xem (không phải 1 mốc chung toàn hệ thống)</td>
+<td>Mỗi người thấy 1 khung giờ riêng (vd 15-60 phút kể từ lúc họ mở) — đây chính là hướng Cách 2 sẽ phân tích ngay dưới đây (ảnh tạo lại mỗi lần mở)</td>
+</tr>
+<tr class="odd">
+<td>Lặp lại theo chu kỳ thay vì hạn giả 1 lần</td>
+<td>Đồng hồ reset đều đặn theo ngày/tuần (như giờ vàng Shopee) — giữ cảm giác khẩn cấp mà không phải "giả vờ hết hạn", né đúng rủi ro "đồng hồ giả" đã nêu ở mục 6.1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Những thủ thuật này áp dụng đúng vào khoảnh khắc "Thu thập" (Lớp 1 ở mục 6.2) — ví dụ ghép đồng hồ + số voucher còn lại (Best Buy), hoặc đồng hồ cá nhân hoá theo lượt mở — chứ không áp cho việc dùng voucher sau này (Lớp 2, không cần khẩn cấp).</p>
+<h3 id="64-3-cách-kỹ-thuật-để-có-đồng-hồ-thật--làm-sao-cho-đúng-khoảnh-khắc-thu-thập-trông-đáng-tin">6.4 3 cách kỹ thuật để có đồng hồ "thật" — làm sao cho đúng khoảnh khắc "Thu thập" trông đáng tin</h3>
+<p>Phần trên trả lời "vì sao cần đồng hồ" và "ai đã dùng thủ thuật gì" — phần này trả lời câu hỏi kỹ thuật đi kèm: làm sao để đồng hồ ở đúng khoảnh khắc Thu thập không bị "giả" (vấn đề gốc đã nêu ở mục 6.1). Thị trường đang giải quyết theo 3 cách:</p>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Cách</th>
+<th>Nguyên lý</th>
+<th>Ai đang dùng</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cách 1 — Chạy thật trên thiết bị</strong></td>
+<td>Code chạy trên thiết bị người xem, tự tính "còn bao lâu" dựa trên đồng hồ máy + mốc kết thúc, cập nhật mỗi giây. Chính xác tuyệt đối bất kể mở lúc nào</td>
+<td>Web, app, iOS Live Activities</td>
+</tr>
+<tr class="even">
+<td><strong>Cách 2 — Ảnh tạo lại mỗi lần mở</strong></td>
+<td>Ảnh (GIF/PNG) được server tạo mới hoàn toàn mỗi lần mở, không cache. Nếu người xem đọc 10 phút, số trên ảnh KHÔNG tự chạy tiếp</td>
+<td>Email marketing (qua bên thứ 3 như SnapTimers, CountdownMail, MailClock — vì nền tảng email không cho chạy code)</td>
+</tr>
+<tr class="odd">
+<td><strong>Cách 3 — Sửa tin định kỳ</strong></td>
+<td>Bot gửi 1 tin, cứ mỗi 10-30 giây tự sửa lại nội dung để cập nhật số còn lại</td>
+<td>Telegram Bot API (<code>editMessageText</code>) — tiền lệ gần bối cảnh chat nhất</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cách 2 hoạt động cụ thể ra sao:</strong> ảnh đếm ngược trong email không phải 1 file đính kèm tĩnh, mà là 1 URL trỏ về server của bên cung cấp dịch vụ (ví dụ MailTimers, CountdownMail). Email không "chạy code" được nên phải lách bằng cách: mỗi lần email client tải ảnh này, nó tự động gửi 1 request HTTP mới tới server — server tính lại "còn bao lâu" ngay tại thời điểm nhận request đó, dựng 1 ảnh GIF/PNG hoàn toàn mới rồi trả về, không có bước cache. Kết quả: mở email lúc 9h thấy 1 số, mở lại lúc 15h thấy số khác — đúng thời gian thực tại từng lần mở, dù bản thân chỉ là 1 tấm ảnh.</p>
+<div class="flow-diagram">
+<div class="flow-diagram-title">Cách 2 — Ảnh đếm ngược email: tạo lại mỗi lần mở</div>
+<div class="flow-steps">
+<div class="flow-step"><span class="flow-step-num">1</span><div class="flow-step-text">Khách mở email — email client tải ảnh đếm ngược từ 1 URL, không phải file tĩnh đính kèm sẵn</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">2</span><div class="flow-step-text">Request HTTP mới được gửi tới server dịch vụ đếm ngược (MailTimers, CountdownMail...)</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">3</span><div class="flow-step-text">Server tính "còn bao lâu" ngay tại thời điểm nhận request, dựng ảnh GIF/PNG mới — không dùng lại ảnh cũ</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">4</span><div class="flow-step-text">Trả ảnh mới về — khách thấy đúng số giờ còn lại tại thời điểm mở, dù mở sớm hay trễ</div></div>
+</div>
+<div class="flow-diagram-note">Giới hạn: số trên ảnh không tự chạy tiếp trong lúc đang xem — chỉ đúng tại đúng khoảnh khắc mở, không cập nhật liên tục như Cách 1.</div>
+</div>
+<p><strong>Cách 3 hoạt động cụ thể ra sao:</strong> bot gửi 1 tin nhắn ban đầu, sau đó 1 tiến trình chạy nền ở phía server của bot (không phải Telegram tự làm) cứ sau mỗi khoảng thời gian cố định — thường 10-30 giây, tuỳ cấu hình để tránh gọi API quá dày — lại gọi phương thức <code>editMessageText</code> của Telegram Bot API để <strong>sửa lại đúng tin nhắn đã gửi trước đó</strong>, khác hẳn việc gửi tin mới liên tục. Người xem không cần thao tác gì cả — tin nhắn trên màn hình tự đổi số vì bot đang chủ động sửa nó từ xa. Cơ chế này bắt buộc bot phải luôn chạy (không được dừng) trong suốt thời gian đếm ngược.</p>
+<div class="flow-diagram">
+<div class="flow-diagram-title">Cách 3 — Bot sửa tin định kỳ (Telegram editMessageText)</div>
+<div class="flow-steps">
+<div class="flow-step"><span class="flow-step-num">1</span><div class="flow-step-text">Bot gửi 1 tin nhắn ban đầu (VD "Còn 2 giờ 00 phút")</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">2</span><div class="flow-step-text">1 tiến trình nền ở server của bot chạy vòng lặp liên tục, không dừng</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">3</span><div class="flow-step-text">Mỗi 10-30 giây, bot gọi API <code>editMessageText</code> để sửa lại đúng tin nhắn đó</div></div>
+<div class="flow-arrow">→</div>
+<div class="flow-step"><span class="flow-step-num">4</span><div class="flow-step-text">Người xem thấy tin tự đổi số — không cần mở lại hay thao tác gì</div></div>
+</div>
+<div class="flow-diagram-note">Giới hạn: cần 1 process chạy nền liên tục cho tới khi hết giờ — nếu bot dừng/lỗi, đồng hồ dừng theo; không phù hợp gửi hàng loạt vì mỗi tin cần 1 vòng lặp riêng theo dõi.</div>
+</div>
+<p><strong>Vì sao 2 cách này không áp dụng thẳng được cho ZNS:</strong> cả 2 đều cần 1 "actor" chủ động phía server đúng tại thời điểm hiển thị — Cách 2 cần server trả lời đúng lúc khách mở (ZNS hiện không có bước "gọi lại server mỗi lần mở tin" — ảnh đã tải về và cache local từ lúc gửi); Cách 3 cần 1 tiến trình chạy nền liên tục sửa tin (ZNS không có cơ chế "sửa lại tin đã gửi"). Đây chính là lý do Zalo Mini App (mục 6.5) là hướng khả thi hơn cho ZBS — Mini App là 1 trang chạy sống thực sự, tương đương "server trả lời đúng lúc mở" của Cách 2 nhưng chạy ngay trong Zalo, không cần lách qua ảnh.</p>
+<p><strong>Bảng đối chiếu ai áp dụng cách nào:</strong></p>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Nền tảng</th>
+<th>Bối cảnh</th>
+<th>Cách làm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shopee, Lazada (Flash Sale)</td>
+<td>Banner trang chủ</td>
+<td>Cách 1 — app tự chạy code</td>
+</tr>
+<tr class="even">
+<td>Amazon (Lightning Deals)</td>
+<td>Trang deal</td>
+<td>Cách 1 — web tự chạy JS</td>
+</tr>
+<tr class="odd">
+<td><strong>WhatsApp Business</strong> (gần ZNS nhất — cùng là chat)</td>
+<td>Tin nhắn flash sale</td>
+<td><strong>Không có đồng hồ built-in trong tin nhắn.</strong> Dùng ảnh/GIF dựng sẵn, hoặc CTA dẫn ra landing page ngoài có đồng hồ thật</td>
+</tr>
+<tr class="even">
+<td>Klaviyo, Mailchimp (qua bên thứ 3)</td>
+<td>Email marketing</td>
+<td>Cách 2</td>
+</tr>
+<tr class="odd">
+<td>Google Display Ads</td>
+<td>Quảng cáo web</td>
+<td>Banner là 1 trang web thu nhỏ (HTML5+JS) — gần Cách 1, không áp dụng được cho tin nhắn</td>
+</tr>
+<tr class="even">
+<td>Telegram (bot đếm ngược)</td>
+<td>Tin nhắn qua bot</td>
+<td>Cách 3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Điểm đáng chú ý nhất:</strong> WhatsApp Business — nền tảng chat gần ZNS nhất — cũng gặp đúng giới hạn ZBS đang gặp, và cách thị trường đi vòng là dùng ảnh/GIF tĩnh hoặc đưa khách ra ngoài chat.</p>
+<h3 id="65-insight-nền-tảng-zalo-mini-app-có-thể-phá-vỡ-giới-hạn-zinstant--sớm-hơn-dự-kiến">6.5 Insight nền tảng: Zalo Mini App có thể phá vỡ giới hạn Zinstant — sớm hơn dự kiến</h3>
+<p>Đây là phát hiện quan trọng nhất khi đào sâu deep-dive. Đánh giá ban đầu kết luận: đồng hồ chạy thật trên thiết bị (Cách 1) là "hướng đúng và bền vững nhất" nhưng phải xếp vào <strong>GĐ3 — phụ thuộc đội app Zalo lõi, ngoài tầm tự quyết của ZBS, cần thời gian dài</strong> (vì toàn bộ component hiện có của Zinstant — Title, Paragraph, Table, Attachment, Button, Payment, Voucher, Rating — đều tĩnh, không loại nào tự tính theo thời gian thực). Kết luận đó đúng <em>nếu</em> đồng hồ phải nằm bên trong chính khung tin nhắn Zinstant.</p>
+<p>Nhưng Zalo đã có sẵn <strong>Mini App</strong> — mở trực tiếp từ 1 nút CTA trong tin nhắn OA, chạy như 1 trang web thật (HTML5+JS) ngay trong Zalo, không phải ảnh/dữ liệu tĩnh. Về nguyên lý, đây chính xác là Cách 1 (đồng hồ tự tính dựa trên đồng hồ máy + mốc kết thúc gửi kèm) — chỉ khác là nó chạy trong Mini App thay vì trực tiếp trong khung tin nhắn. CTA "Xem ưu đãi" trên tin ZNS có đồng hồ đếm ngược ảnh tĩnh (GĐ1) hoàn toàn có thể trỏ thẳng vào 1 Mini App hiển thị đồng hồ chạy thật — nghĩa là trải nghiệm "đồng hồ thật" có thể đến tay khách hàng <strong>mà không cần chờ đội app Zalo lõi thêm 1 loại component mới vào chuẩn Zinstant</strong>.</p>
+<p>Đây là góc nhìn thay đổi bản chất bài toán — nên dù đã tạm gác đánh giá effort dev, vẫn cần ghi chú: <strong>GĐ3 (giá trị cao nhất) có thể không còn là "ngoài tầm tự quyết"</strong> — cần Platform xác nhận lại độ khả thi của hướng Mini App này càng sớm càng tốt vì nó ảnh hưởng trực tiếp tới thứ tự ưu tiên roadmap.</p>
+<h3 id="66-đề-xuất-3-giai-đoạn-gốc-đối-chiếu-lộ-trình-đã-đề-xuất-trước-khi-có-insight-mini-app">6.6 Đề xuất 3 giai đoạn gốc (đối chiếu lộ trình đã đề xuất trước khi có insight Mini App)</h3>
+<div class="table-wrap"><table style="min-width:660px">
+<thead>
+<tr class="header">
+<th>Giai đoạn</th>
+<th>Nội dung</th>
+<th>Phụ thuộc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>GĐ1</strong></td>
+<td>Công cụ tạo ảnh đếm ngược tự động — OA nhập mốc kết thúc, hệ thống tự tính và vẽ đúng số giờ còn lại tại thời điểm gửi, dùng đúng cơ chế <code>media_id</code> cố định đang có</td>
+<td>ZBS tự làm trọn vẹn, không cần xác nhận từ team nào khác. Hạn chế: vẫn là ảnh tĩnh, chưa giải quyết vấn đề gốc</td>
+</tr>
+<tr class="even">
+<td><strong>GĐ2</strong></td>
+<td>Ảnh làm mới theo lượt mở (kiểu email) — ảnh tính lại mỗi lần khách mở tin</td>
+<td>Cần Platform xác nhận: component ảnh có hỗ trợ link động không, cache Zinstant có "ép tải lại" được không</td>
+</tr>
+<tr class="odd">
+<td><strong>GĐ3</strong></td>
+<td>Zalo client hỗ trợ đồng hồ chạy thật (dài hạn, native) — chỉ cần gửi 1 mốc kết thúc, Zalo app tự tính và hiển thị</td>
+<td>Cần đưa vào roadmap phối hợp với đội app Zalo lõi — <strong>hoặc, theo insight mục 6.5, có thể đạt được sớm hơn qua Mini App</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Đề xuất bổ sung nếu áp dụng:</strong> gắn CTA dẫn thẳng tới nơi dùng ưu đãi (Ví QR của Voucher đã có sẵn); giới hạn thời lượng đồng hồ đếm ngược tối đa (vd 7 ngày); chỉ áp dụng cho tin tag3 (khuyến mãi), không áp dụng tag1 (giao dịch); ở GĐ1 cảnh báo rõ cho OA đây chưa phải đồng hồ thật, và ẩn hẳn đồng hồ nếu khách mở sau khi hết hạn (thay vì hiện 00:00:00).</p>
+<h3 id="67-đánh-giá-toàn-diện-tiềm-năng-triển-khai">6.7 Đánh giá toàn diện tiềm năng triển khai</h3>
+<div class="table-wrap"><table style="min-width:640px">
+<thead>
+<tr class="header">
+<th>Khía cạnh</th>
+<th>Đánh giá</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Giá trị cho khách hàng doanh nghiệp (OA) — trọng tâm</strong></td>
+<td>Cao — cốt lõi không chỉ là đồng hồ mà là toàn bộ luồng "Thu thập → Ví QR" (mục 6.2): mỗi lượt thu thập là 1 tín hiệu quan tâm đo lường được và tạo tập khách remarketing cho các tin ZNS sau. Ghép thêm tín hiệu thật (tồn kho, giá tăng dần) càng tăng độ tin cậy, đúng như số liệu ngành đã trích (+8-20% conversion, CTR +10-25%). Trải nghiệm người nhận tin là yếu tố <strong>hỗ trợ</strong> quan trọng ở đây theo hướng khác với Info Card: ở GĐ1 (vẫn ảnh tĩnh) đồng hồ đếm ngược chưa giải quyết cảm giác "đồng hồ giả", rủi ro làm khách hàng cuối mất niềm tin — hậu quả đổ ngược lên chính thương hiệu OA đang gửi tin, không phải lên ZBS. Hướng Mini App/tap-to-reveal giải quyết đúng gốc rễ này nên bảo vệ tốt hơn uy tín của OA, qua đó giá trị OA nhận được cao hơn hẳn</td>
+</tr>
+<tr class="even">
+<td>Giá trị ZBS — trực tiếp</td>
+<td>Tăng dần theo giai đoạn; hướng Mini App CTA có thể rút ngắn khoảng cách tới GĐ3 sớm hơn dự kiến</td>
+</tr>
+<tr class="odd">
+<td>Giá trị ZBS — gián tiếp</td>
+<td>Trung bình-cao — nếu đồng hồ đếm ngược tăng conversion, OA gửi nhiều tin khuyến mãi hơn → tăng volume ZNS trả phí dài hạn</td>
+</tr>
+<tr class="even">
+<td>Mức độ khác biệt/đổi mới</td>
+<td>Hướng "đồng hồ chạy thật qua Mini App CTA" (mục 6.5) chưa xuất hiện ở bất kỳ tiền lệ nào đã khảo sát, kể cả WhatsApp</td>
+</tr>
+<tr class="odd">
+<td>Phụ thuộc đối tác (không tính effort dev)</td>
+<td>Hướng Mini App cần Platform xác nhận sớm vì thay đổi bản chất roadmap</td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+</section><section class="report-section" id="sec-7-nhận-xét-chuẩn-hóa--tổng-kết-định-hướng"><h2 id="7-nhận-xét-chuẩn-hóa--tổng-kết-định-hướng">7. Nhận xét chuẩn hóa &amp; tổng kết định hướng</h2>
+<h3 id="71-hai-trục-khác-biệt-bản-chất-giữa-4-hạng-mục">7.1 Hai trục khác biệt bản chất giữa 4 hạng mục</h3>
+<p>4 hạng mục thực chất nằm trên <strong>2 trục khác nhau</strong>, không nên so sánh bằng 1 thước đo duy nhất:</p>
+<p><strong>Trục "đòn bẩy có sẵn, mở rộng phạm vi"</strong> (ZBSP-7, ZBSP-14) — rủi ro thấp hơn vì dùng lại cơ chế tính giá đã tồn tại, thời gian triển khai ngắn hơn, nhưng trần doanh thu cũng bị giới hạn bởi chính đòn bẩy cũ. ZBSP-7 vượt trội rõ vì đã có bằng chứng vận hành thật; ZBSP-14 còn thiếu bước xác nhận nhu cầu.</p>
+<p><strong>Trục "đòn bẩy hoàn toàn mới"</strong> (ZBSP-26, ZBSP-27) — rủi ro và thời gian triển khai cao hơn vì cần đồng thuận liên team (Platform, Legal, và với ZBSP-27 là cả đội app Zalo), nhưng trần doanh thu tiềm năng không bị giới hạn bởi cấu trúc giá cũ. ZBSP-26 có lợi thế hơn ZBSP-27 vì tận dụng được hạ tầng đã chạy ổn định (First-time Banner) và ít phụ thuộc đội ngoài ZBS hơn — dù phát hiện Mini App có thể thu hẹp khoảng cách này đáng kể.</p>
+</section>
+    </main>
+  </div>
+
+  <footer class="report-footer">
+    Báo cáo nội bộ PO · ZBS Template Message — Rà soát tiềm năng Monetization · Nguồn: Jira (ZBSP), Confluence (space ZO), dữ liệu vận hành nội bộ &amp; nghiên cứu thị trường.
+  </footer>
+
+</div>
+</body>
+</html>
