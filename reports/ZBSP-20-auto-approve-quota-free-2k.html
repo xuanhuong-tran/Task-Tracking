@@ -399,7 +399,7 @@
     <h2>3. Giải pháp đề xuất</h2>
     <p class="report-paragraph">Xây dựng một <strong>Public API</strong>, cho phép OA gửi yêu cầu xin quota free 2.000 tin lần đầu trực tiếp vào hệ thống — việc gửi yêu cầu có thể do <strong>Agency</strong> thực hiện hộ, hoặc do <strong>chính doanh nghiệp tự làm trực tiếp</strong>. Hệ thống tự kiểm tra điều kiện và tự động cấp quota nếu hợp lệ, không cần người duyệt tay.</p>
     <p class="report-paragraph">Tham khảo pattern đã triển khai thành công trước đó — cặp ticket ZCA-3467 (Public API tạo Template từ Predefined Template) + ZCA-3477 (auto-approve khi detect match predefined): cùng kiến trúc "Public API giới hạn quyền gọi + điều kiện match tự động bỏ qua duyệt thủ công".</p>
-    <div class="callout"><strong>Chọn API Trigger thay vì cron/batch nội bộ</strong> vì ưu tiên đưa quyền chủ động cho doanh nghiệp/Agency, tránh việc họ phải chờ tới chu kỳ quét định kỳ mới được cấp — đặc biệt quan trọng khi hệ thống setup (tạo ZBS Account → tạo App → tạo OA → liên kết) có thể mất nhiều thời gian không đoán trước được, khiến 1 job quét theo lịch dễ tạo cảm giác "tồn đọng" nếu không thiết kế đúng, dần dà gây gánh nặng và trì trệ cho hệ thống hiện tại. Ngoài ra, nếu để hệ thống tự đi tìm (Cron), nó phải quét <em>liên tục theo lịch</em> và với mỗi OA ứng viên phải kiểm tra chéo trạng thái của nhiều bên liên quan (ZBS Account đã tạo/hợp lệ chưa, App đã tạo và link ZBS chưa, OA đã tạo và ủy quyền App chưa) — dù 1 lần kiểm tra rẻ, việc lặp lại đều đặn trên cả tập ứng viên (kể cả những case đang làm dở, chưa hoàn tất) vẫn tiêu tốn tài nguyên nền liên tục dù chưa ai cần. Với API Trigger, hệ thống chỉ chạy đúng chuỗi kiểm tra đó <strong>1 lần, đúng lúc</strong> có request thật — không cần tự "đoán" khi nào 1 doanh nghiệp đã xong setup, không tốn tài nguyên quét nền khi chưa ai cần. Đổi lại, cần kiểm soát chặt tải hệ thống và rủi ro phụ thuộc bên gọi (xem mục 6 và mục 12).</div>
+   <div class="callout"><strong>Chọn API Trigger thay vì cron/batch nội bộ</strong> vì đưa quyền chủ động cho doanh nghiệp/Agency, không phải chờ chu kỳ quét (nhất là khi thời gian setup ZBS Account → App → OA không cố định). Cron phải quét liên tục và kiểm tra chéo trạng thái nhiều bên cho mọi ứng viên kể cả khi chưa ai cần, tốn tài nguyên nền. API Trigger chỉ chạy đúng 1 lần khi có request thật. Đổi lại cần kiểm soát chặt tải hệ thống và rủi ro phụ thuộc bên gọi (xem mục 6, mục 11).</div>
   </section>
 
   <section class="report-section">
@@ -718,7 +718,7 @@
         <tr>
           <td>Agency/doanh nghiệp không chủ động gọi API dù OA đã đủ điều kiện (quên, chưa biết có API, hoặc gặp lỗi tích hợp) → OA đủ điều kiện nhưng không bao giờ được cấp quota</td>
           <td><span class="risk-badge medium">Trung bình</span></td>
-          <td><strong>Khắc phục:</strong> cân nhắc thêm 1 job báo cáo định kỳ (nhẹ, chạy thưa, không tự cấp quota) liệt kê các OA đủ điều kiện nhưng chưa từng gọi API, để BD/Agency chủ động nhắc — không phải cơ chế auto-grant, chỉ là kênh nhắc nhở bổ sung (cần Product/BD xác nhận có đưa vào scope lần này không, xem mục 12).</td>
+          <td><strong>Khắc phục:</strong> cân nhắc thêm 1 job báo cáo định kỳ (nhẹ, chạy thưa, không tự cấp quota) liệt kê các OA đủ điều kiện nhưng chưa từng gọi API, để BD/Agency chủ động nhắc — không phải cơ chế auto-grant, chỉ là kênh nhắc nhở bổ sung</td>
         </tr>
       </table>
     </div>
