@@ -866,16 +866,6 @@
 <td>Giảm cảm giác bị làm phiền — khách ít bị mời follow vào lúc không phù hợp</td>
 <td>Tỷ lệ hiển thị giảm nhưng tỷ lệ follow/tin tăng — phí/lượt hiển thị có thể định giá cao hơn vì "chất lượng" tốt hơn</td>
 <td>Cao — cả Shopee lẫn Messenger đều dùng logic đơn giản (chưa follow → luôn hiện)</td>
-</tr>
-<tr class="odd">
-<td><span class="badge badge-medium">Trung bình</span></td>
-<td><strong>Follow streak / thưởng luỹ tiến</strong></td>
-<td>Không dừng ở thưởng 1 lần — thiết kế các mốc thưởng khi khách tiếp tục tương tác đều đặn với OA</td>
-<td>OA duy trì được tương tác dài hạn với follower, không chỉ có follower "chết" ngay sau khi nhận thưởng</td>
-<td>Khách có lý do quay lại tương tác thay vì follow xong không tương tác lại</td>
-<td>Tăng tần suất tương tác → tăng volume tin ZNS trả phí dài hạn</td>
-<td>Cao — hầu hết tiền lệ chỉ thưởng đúng 1 lần tại thời điểm follow</td>
-</tr>
 <tr class="even">
 <td><span class="badge badge-advanced">Nâng cao</span></td>
 <td><strong>Gamified follow (vòng quay/cào thẻ ngay khi follow)</strong></td>
@@ -1073,7 +1063,7 @@
 </div>
 <div class="flow-diagram-note">Giới hạn: cần 1 process chạy nền liên tục cho tới khi hết giờ — nếu bot dừng/lỗi, đồng hồ dừng theo; không phù hợp gửi hàng loạt vì mỗi tin cần 1 vòng lặp riêng theo dõi.</div>
 </div>
-<p><strong>Vì sao 2 cách này không áp dụng thẳng được cho ZNS:</strong> cả 2 đều cần 1 "actor" chủ động phía server đúng tại thời điểm hiển thị — Cách 2 cần server trả lời đúng lúc khách mở (ZNS hiện không có bước "gọi lại server mỗi lần mở tin" — ảnh đã tải về và cache local từ lúc gửi); Cách 3 cần 1 tiến trình chạy nền liên tục sửa tin (ZNS không có cơ chế "sửa lại tin đã gửi"). Đây chính là lý do Zalo Mini App (mục 6.5) là hướng khả thi hơn cho ZBS — Mini App là 1 trang chạy sống thực sự, tương đương "server trả lời đúng lúc mở" của Cách 2 nhưng chạy ngay trong Zalo, không cần lách qua ảnh.</p>
+<p><strong>Vì sao 2 cách này không áp dụng thẳng được cho ZNS:</strong> cả 2 đều cần 1 "actor" chủ động phía server đúng tại thời điểm hiển thị — Cách 2 cần server trả lời đúng lúc khách mở (ZNS hiện không có bước "gọi lại server mỗi lần mở tin" — ảnh đã tải về và cache local từ lúc gửi); Cách 3 cần 1 tiến trình chạy nền liên tục sửa tin (ZNS không có cơ chế "sửa lại tin đã gửi"). Ở hiện trạng hạ tầng Zinstant, chưa có cách nào trong 3 cách trên áp dụng thẳng được cho ZNS — cần Platform đánh giá thêm để xác định hướng kỹ thuật khả thi trước khi chốt roadmap.</p>
 <p><strong>Bảng đối chiếu ai áp dụng cách nào:</strong></p>
 <div class="table-wrap"><table style="min-width:660px">
 <thead>
@@ -1105,11 +1095,6 @@
 <td>Cách 2</td>
 </tr>
 <tr class="odd">
-<td>Google Display Ads</td>
-<td>Quảng cáo web</td>
-<td>Banner là 1 trang web thu nhỏ (HTML5+JS) — gần Cách 1, không áp dụng được cho tin nhắn</td>
-</tr>
-<tr class="even">
 <td>Telegram (bot đếm ngược)</td>
 <td>Tin nhắn qua bot</td>
 <td>Cách 3</td>
@@ -1117,39 +1102,7 @@
 </tbody>
 </table></div>
 <p><strong>Điểm đáng chú ý nhất:</strong> WhatsApp Business — nền tảng chat gần ZNS nhất — cũng gặp đúng giới hạn ZBS đang gặp, và cách thị trường đi vòng là dùng ảnh/GIF tĩnh hoặc đưa khách ra ngoài chat.</p>
-<h3 id="65-insight-nền-tảng-zalo-mini-app-có-thể-phá-vỡ-giới-hạn-zinstant--sớm-hơn-dự-kiến">6.5 Insight nền tảng: Zalo Mini App có thể phá vỡ giới hạn Zinstant — sớm hơn dự kiến</h3>
-<p>Đây là phát hiện quan trọng nhất khi đào sâu deep-dive. Đánh giá ban đầu kết luận: đồng hồ chạy thật trên thiết bị (Cách 1) là "hướng đúng và bền vững nhất" nhưng phải xếp vào <strong>GĐ3 — phụ thuộc đội app Zalo lõi, ngoài tầm tự quyết của ZBS, cần thời gian dài</strong> (vì toàn bộ component hiện có của Zinstant — Title, Paragraph, Table, Attachment, Button, Payment, Voucher, Rating — đều tĩnh, không loại nào tự tính theo thời gian thực). Kết luận đó đúng <em>nếu</em> đồng hồ phải nằm bên trong chính khung tin nhắn Zinstant.</p>
-<p>Nhưng Zalo đã có sẵn <strong>Mini App</strong> — mở trực tiếp từ 1 nút CTA trong tin nhắn OA, chạy như 1 trang web thật (HTML5+JS) ngay trong Zalo, không phải ảnh/dữ liệu tĩnh. Về nguyên lý, đây chính xác là Cách 1 (đồng hồ tự tính dựa trên đồng hồ máy + mốc kết thúc gửi kèm) — chỉ khác là nó chạy trong Mini App thay vì trực tiếp trong khung tin nhắn. CTA "Xem ưu đãi" trên tin ZNS có đồng hồ đếm ngược ảnh tĩnh (GĐ1) hoàn toàn có thể trỏ thẳng vào 1 Mini App hiển thị đồng hồ chạy thật — nghĩa là trải nghiệm "đồng hồ thật" có thể đến tay khách hàng <strong>mà không cần chờ đội app Zalo lõi thêm 1 loại component mới vào chuẩn Zinstant</strong>.</p>
-<p>Đây là góc nhìn thay đổi bản chất bài toán — nên dù đã tạm gác đánh giá effort dev, vẫn cần ghi chú: <strong>GĐ3 (giá trị cao nhất) có thể không còn là "ngoài tầm tự quyết"</strong> — cần Platform xác nhận lại độ khả thi của hướng Mini App này càng sớm càng tốt vì nó ảnh hưởng trực tiếp tới thứ tự ưu tiên roadmap.</p>
-<h3 id="66-đề-xuất-3-giai-đoạn-gốc-đối-chiếu-lộ-trình-đã-đề-xuất-trước-khi-có-insight-mini-app">6.6 Đề xuất 3 giai đoạn gốc (đối chiếu lộ trình đã đề xuất trước khi có insight Mini App)</h3>
-<div class="table-wrap"><table style="min-width:660px">
-<thead>
-<tr class="header">
-<th>Giai đoạn</th>
-<th>Nội dung</th>
-<th>Phụ thuộc</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>GĐ1</strong></td>
-<td>Công cụ tạo ảnh đếm ngược tự động — OA nhập mốc kết thúc, hệ thống tự tính và vẽ đúng số giờ còn lại tại thời điểm gửi, dùng đúng cơ chế <code>media_id</code> cố định đang có</td>
-<td>ZBS tự làm trọn vẹn, không cần xác nhận từ team nào khác. Hạn chế: vẫn là ảnh tĩnh, chưa giải quyết vấn đề gốc</td>
-</tr>
-<tr class="even">
-<td><strong>GĐ2</strong></td>
-<td>Ảnh làm mới theo lượt mở (kiểu email) — ảnh tính lại mỗi lần khách mở tin</td>
-<td>Cần Platform xác nhận: component ảnh có hỗ trợ link động không, cache Zinstant có "ép tải lại" được không</td>
-</tr>
-<tr class="odd">
-<td><strong>GĐ3</strong></td>
-<td>Zalo client hỗ trợ đồng hồ chạy thật (dài hạn, native) — chỉ cần gửi 1 mốc kết thúc, Zalo app tự tính và hiển thị</td>
-<td>Cần đưa vào roadmap phối hợp với đội app Zalo lõi — <strong>hoặc, theo insight mục 6.5, có thể đạt được sớm hơn qua Mini App</strong></td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Đề xuất bổ sung nếu áp dụng:</strong> gắn CTA dẫn thẳng tới nơi dùng ưu đãi (Ví QR của Voucher đã có sẵn); giới hạn thời lượng đồng hồ đếm ngược tối đa (vd 7 ngày); chỉ áp dụng cho tin tag3 (khuyến mãi), không áp dụng tag1 (giao dịch); ở GĐ1 cảnh báo rõ cho OA đây chưa phải đồng hồ thật, và ẩn hẳn đồng hồ nếu khách mở sau khi hết hạn (thay vì hiện 00:00:00).</p>
-<h3 id="67-đánh-giá-toàn-diện-tiềm-năng-triển-khai">6.7 Đánh giá toàn diện tiềm năng triển khai</h3>
+<h3 id="65-đánh-giá-toàn-diện-tiềm-năng-triển-khai">6.5 Đánh giá toàn diện tiềm năng triển khai</h3>
 <div class="table-wrap"><table style="min-width:640px">
 <thead>
 <tr class="header">
@@ -1160,11 +1113,11 @@
 <tbody>
 <tr class="odd">
 <td><strong>Giá trị cho khách hàng doanh nghiệp (OA) — trọng tâm</strong></td>
-<td>Cao — cốt lõi không chỉ là đồng hồ mà là toàn bộ luồng "Thu thập → Ví QR" (mục 6.2): mỗi lượt thu thập là 1 tín hiệu quan tâm đo lường được và tạo tập khách remarketing cho các tin ZNS sau. Ghép thêm tín hiệu thật (tồn kho, giá tăng dần) càng tăng độ tin cậy, đúng như số liệu ngành đã trích (+8-20% conversion, CTR +10-25%). Trải nghiệm người nhận tin là yếu tố <strong>hỗ trợ</strong> quan trọng ở đây theo hướng khác với Info Card: ở GĐ1 (vẫn ảnh tĩnh) đồng hồ đếm ngược chưa giải quyết cảm giác "đồng hồ giả", rủi ro làm khách hàng cuối mất niềm tin — hậu quả đổ ngược lên chính thương hiệu OA đang gửi tin, không phải lên ZBS. Hướng Mini App/tap-to-reveal giải quyết đúng gốc rễ này nên bảo vệ tốt hơn uy tín của OA, qua đó giá trị OA nhận được cao hơn hẳn</td>
+<td>Cao — cốt lõi không chỉ là đồng hồ mà là toàn bộ luồng "Thu thập → Ví QR" (mục 6.2): mỗi lượt thu thập là 1 tín hiệu quan tâm đo lường được và tạo tập khách remarketing cho các tin ZNS sau. Ghép thêm tín hiệu thật (tồn kho, giá tăng dần) càng tăng độ tin cậy, đúng như số liệu ngành đã trích (+8-20% conversion, CTR +10-25%). Trải nghiệm người nhận tin là yếu tố <strong>hỗ trợ</strong> quan trọng ở đây theo hướng khác với Info Card: ở GĐ1 (vẫn ảnh tĩnh) đồng hồ đếm ngược chưa giải quyết cảm giác "đồng hồ giả", rủi ro làm khách hàng cuối mất niềm tin — hậu quả đổ ngược lên chính thương hiệu OA đang gửi tin, không phải lên ZBS. Cần xác định hướng kỹ thuật khả thi để giải quyết đúng gốc rễ cảm giác này, qua đó bảo vệ tốt hơn uy tín của OA</td>
 </tr>
 <tr class="even">
 <td>Giá trị ZBS — trực tiếp</td>
-<td>Tăng dần theo giai đoạn; hướng Mini App CTA có thể rút ngắn khoảng cách tới GĐ3 sớm hơn dự kiến</td>
+<td>Tăng dần theo giai đoạn triển khai</td>
 </tr>
 <tr class="odd">
 <td>Giá trị ZBS — gián tiếp</td>
@@ -1172,11 +1125,11 @@
 </tr>
 <tr class="even">
 <td>Mức độ khác biệt/đổi mới</td>
-<td>Hướng "đồng hồ chạy thật qua Mini App CTA" (mục 6.5) chưa xuất hiện ở bất kỳ tiền lệ nào đã khảo sát, kể cả WhatsApp</td>
+<td>Đồng hồ chạy thật (Cách 1) chưa xuất hiện ở bất kỳ tiền lệ chat nào đã khảo sát, kể cả WhatsApp — nhưng cần xác định rõ hướng kỹ thuật khả thi trước khi khẳng định mức độ khác biệt này đạt được</td>
 </tr>
 <tr class="odd">
 <td>Phụ thuộc đối tác (không tính effort dev)</td>
-<td>Hướng Mini App cần Platform xác nhận sớm vì thay đổi bản chất roadmap</td>
+<td>Cần Platform xác nhận hướng kỹ thuật khả thi sớm, vì ảnh hưởng trực tiếp tới thứ tự ưu tiên roadmap</td>
 </tr>
 </tbody>
 </table></div>
