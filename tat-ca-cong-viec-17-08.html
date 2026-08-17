@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tổng hợp toàn bộ công việc — huongtx — 17/08/2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F5F4F0;
+  --surface: #FFFFFF;
+  --border: #E3E1DA;
+  --text-primary: #18181B;
+  --text-secondary: #6B6860;
+  --text-muted: #A8A49E;
+
+  --done-bar: #22C55E;
+  --done-bg: #F0FDF4; --done-text: #15803D; --done-border: #BBF7D0;
+  --active-bar: #3B82F6;
+  --active-bg: #EFF6FF; --active-text: #1D4ED8; --active-border: #BFDBFE;
+  --soon-bar: #F59E0B;
+  --soon-bg: #FFFBEB; --soon-text: #B45309; --soon-border: #FDE68A;
+  --later-bar: #94A3B8;
+  --later-bg: #F8FAFC; --later-text: #475569; --later-border: #E2E8F0;
+}
+
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; padding: 40px 24px; }
+.wrapper { max-width: 800px; margin: 0 auto; }
+
+header.page-header { margin-bottom: 20px; }
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sub { font-size: 13px; color: var(--text-secondary); }
+
+.list { display: flex; flex-direction: column; gap: 10px; }
+.item {
+  background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px;
+  padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start;
+}
+.num {
+  width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%;
+  background: var(--bg); color: var(--text-secondary); font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.item-body { flex: 1; min-width: 0; }
+.item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.item-title { font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.35; }
+.pill { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; border: 0.5px solid; white-space: nowrap; flex-shrink: 0; }
+.pill-review { background: var(--soon-bg); color: var(--soon-text); border-color: var(--soon-border); }
+.pill-dev { background: var(--active-bg); color: var(--active-text); border-color: var(--active-border); }
+.pill-ready { background: var(--done-bg); color: var(--done-text); border-color: var(--done-border); }
+.pill-todo { background: var(--later-bg); color: var(--later-text); border-color: var(--later-border); }
+
+.field { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; padding: 5px 0; border-top: 0.5px solid var(--border); }
+.field:first-of-type { border-top: none; }
+.field-label { flex-shrink: 0; font-weight: 600; color: var(--text-primary); min-width: 84px; }
+.field-value { color: var(--text-secondary); overflow-wrap: anywhere; }
+.field-value a { color: var(--active-text); text-decoration: none; }
+.field-value a:hover { text-decoration: underline; }
+.highlight { color: var(--text-primary); font-weight: 600; }
+
+footer.page-footer { margin-top: 24px; font-size: 12px; color: var(--text-muted); }
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .item { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="page-header">
+    <p class="eyebrow">ZBS Product · huongtx</p>
+    <h1>Tổng hợp toàn bộ công việc</h1>
+    <p class="sub">Cập nhật 17/08/2026</p>
+  </header>
+
+  <div class="list">
+
+    <div class="item">
+      <div class="num">1</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Scoping auto-approve 2k quota free (ZBSP-20)</span>
+          <span class="pill pill-review">Review</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Chốt phương án tự động hoá cấp 2k tin nhắn miễn phí qua API Trigger; điều kiện auto-approve (OA + App link ZBS hợp lệ, chưa từng nhận theo OA ID).</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Review</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Xác nhận chính xác chính sách liên quan → chốt phương án cuối → lên lịch thực hiện → chuyển giao dev.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="reports/ZBSP-20-auto-approve-quota-free-2k.html" target="_blank" rel="noopener">reports/ZBSP-20-auto-approve-quota-free-2k.html</a></span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">2</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Phân tích feature tiềm năng để monetize</span>
+          <span class="pill pill-dev">Developing</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Phân tích các hướng cơ bản cho các feature có thể monetize (info card, countdown...); đã đánh giá có khả năng phát triển.</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Developing</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Tiếp tục phát triển theo hướng đã chọn.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="reports/zbs-template-monetization-baocao.html" target="_blank" rel="noopener">reports/zbs-template-monetization-baocao.html</a></span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">3</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Prefix button Zalo Form</span>
+          <span class="pill pill-ready">Ready for dev</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Scope 3 phần — Admin Tool (componentID/bảng giá), ZBS Account (UI nút liên kết), API (validate & phân loại link theo domain).</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Ready for dev</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Chuyển giao dev triển khai.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="https://jira.tools.adtima.vn/browse/ZBSP-13" target="_blank" rel="noopener">ZBSP-13</a>, <a href="https://jira.tools.adtima.vn/browse/ZCA-4689" target="_blank" rel="noopener">ZCA-4689</a></span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">4</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Thu thập số điện thoại</span>
+          <span class="pill pill-ready">Ready for dev</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Thống nhất spec thu thập & xác thực SĐT trong ZBS Account, tạo ticket.</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Ready for dev</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Chuyển giao dev triển khai — timeline live: <span class="highlight">7/9</span>.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="https://jira.tools.adtima.vn/browse/ZCA-4319" target="_blank" rel="noopener">ZCA-4319</a></span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">5</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Redesign cổng thanh toán</span>
+          <span class="pill pill-review">Review</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Fresh UX Redesign toàn bộ flow thanh toán ZBS.</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Review</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Review để tiến hành chỉnh sửa — chưa duyệt chính thức và chưa chuyển giao thực hiện.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="reports/redesign-cong-thanh-toan.html" target="_blank" rel="noopener">reports/redesign-cong-thanh-toan.html</a></span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">6</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Rà soát doanh nghiệp dùng template rating cũ</span>
+          <span class="pill pill-todo">Chưa triển khai</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Tìm các doanh nghiệp đang dùng template rating cũ, chưa update giao diện mới → xác nhận phương án điều chỉnh (dev chỉnh hay yêu cầu doanh nghiệp tự thực hiện).</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Chưa triển khai</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Rà soát các doanh nghiệp đang có volume template rating cũ đang hoạt động, đề xuất phương án giải quyết.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value">Chưa có.</span></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="num">7</div>
+      <div class="item-body">
+        <div class="item-top">
+          <span class="item-title">Điều chỉnh notification bar của website Zalo</span>
+          <span class="pill pill-ready">Ready for dev</span>
+        </div>
+        <div class="field"><span class="field-label">Mô tả</span><span class="field-value">Điều chỉnh giao diện noti bar trên website zalo.solutions và fix lỗi liên quan đến nút close (không đồng nhất ở các trang) .</span></div>
+        <div class="field"><span class="field-label">Status</span><span class="field-value">Ready for dev</span></div>
+        <div class="field"><span class="field-label">Next step</span><span class="field-value">Chuyển giao dev triển khai.</span></div>
+        <div class="field"><span class="field-label">Tài liệu</span><span class="field-value"><a href="https://jira.tools.adtima.vn/projects/ZCA/issues/ZCA-4738?filter=reportedbyme" target="_blank" rel="noopener">ZCA-4738</a></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="page-footer">ZBS Product · huongtx · 17/08/2026</footer>
+
+</div>
+</body>
+</html>
